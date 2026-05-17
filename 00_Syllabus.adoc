@@ -1,0 +1,51 @@
+= Syllabus
+:toc-title: Contenido
+:toc: right
+:figure-caption: Figura
+:icons: font
+:stylesdir: ./res/styles/
+:stylesheet: github-md.css
+:docinfo: private
+:docinfodir: ./res/docinfo/
+:imagesdir: ./assets/imgs/
+:attachmentsdir: ./assets/attachments/
+:diagramsdir: ./assets/diagrams/
+:diagram-cachedir: ./.cache/diagrams/
+
+== Descripción
+
+Este curso entrega las bases necesarias para entender y desarrollar el control de versiones con Git y el manejo de repositorios remotos. El énfasis principal se encuentra en la familiarización del estudiante con los conceptos de manejo y control de versiones de repositorios para que estos puedan retomar su aprendizaje por cuenta propia.
+
+== Temario
+
+=== TEMA 0: Preparaciones para el curso.
+
+* Instalación de Git y descripción general de su configuración.
+* Instalación de vscode y descripción general de su configuración.
+* Creación de cuenta de GitHub.
+
+=== TEMA I: Conceptos básicos
+
+* Características y clasificación de archivos.
+* Terminal y comandos. 
+
+=== TEMA II: Introducción a Git 
+
+* Git, control de versiones y su terminología.
+* Comandos más comunes de git.
+* Flujo de trabajo básico con Git.
+* Git desde vscode.
+* Recursos para la profundización en Git.
+
+=== TEMA III: Flujos de trabajo con Git estandarizados
+
+* Introducción a las ramas (branches).
+* Flujos de trabajo estandarizados.
+
+=== TEMA IV: Introducción al control de versiones centralizado con Git y GitHub
+
+* Introducción a GitHub.
+* Protocolos de comunicación con repositorios remotos.
+* Creación, administración y mantenimiento de un repositorio remoto.
+* Flujos de trabajo grupales estandarizados.
+* Recursos para la profundización en GitHub.

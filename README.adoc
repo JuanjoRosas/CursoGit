@@ -1,0 +1,16 @@
+= Curso de control de versiones con Git
+:toc-title: Contenido
+:toc: right
+:figure-caption: Figura
+:icons: font
+:stylesdir: ./res/styles/
+:stylesheet: github-md.css
+:docinfo: private
+:docinfodir: ./res/docinfo/
+:imagesdir: ./assets/imgs/
+:attachmentsdir: ./assets/attachments/
+:diagramsdir: ./assets/diagrams/
+:diagram-cachedir: ./.cache/diagrams/
+
+== Descripción
+El presente repositorio contiene todos los recursos utilizados para el desarrollo del curso de introducción al control de versiones con Git.
