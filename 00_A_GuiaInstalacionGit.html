@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.26">
+<title>Guía de instalación de Git</title>
+<style>
+/* ==========================================================================
+   Asciidoctor GitHub Theme
+   Inspirado en github-markdown-css
+   ========================================================================== */
+
+/* Tema claro */
+:root {
+  --color-bg: #ffffff;
+  --color-bg-secondary: #f6f8fa;
+  --color-border: #d0d7de;
+  --color-text: #24292f;
+  --color-text-muted: #57606a;
+  --color-link: #0969da;
+  --color-link-hover: #0550ae;
+  --color-code-bg: rgba(175, 184, 193, 0.2);
+  --color-pre-bg: #f6f8fa;
+
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-important: #8250df;
+  --color-caution: #cf222e;
+
+
+  --toc-width: 280px;
+  --content-width: 980px;
+  --content-padding-x: 72px;
+  --content-padding-x-mobile: 16px;
+
+  /* Nuevo padding exclusivo para el texto del footer */
+  --footer-padding-x: 32px;
+  --footer-padding-x-mobile: 16px;
+}
+
+/* Tema oscuro */
+[data-theme="dark"] {
+  --color-bg: #0d1117;
+  --color-bg-secondary: #161b22;
+  --color-border: #30363d;
+  --color-text: #c9d1d9;
+  --color-text-muted: #8b949e;
+  --color-link: #58a6ff;
+  --color-link-hover: #79c0ff;
+  --color-code-bg: rgba(110, 118, 129, 0.4);
+  --color-pre-bg: #161b22;
+
+  --color-note: #58a6ff;
+  --color-tip: #3fb950;
+  --color-warning: #d29922;
+  --color-important: #bc8cff;
+  --color-caution: #f85149;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    "Noto Sans",
+    Helvetica,
+    Arial,
+    sans-serif;
+  line-height: 1.6;
+  word-wrap: break-word;
+}
+
+a {
+  color: var(--color-link);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--color-link-hover);
+  text-decoration: underline;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ==========================================================================
+   Layout general
+   ========================================================================== */
+
+#header,
+#content,
+#footnotes {
+  max-width: var(--content-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--content-padding-x);
+  padding-right: var(--content-padding-x);
+}
+
+#content {
+  padding-top: 24px;
+  padding-bottom: 48px;
+}
+
+#footer {
+  margin-top: 48px;
+  padding: 24px 0; /* sin padding horizontal */
+  border-top: 1px solid var(--color-border);
+  background: var(--color-bg-secondary);
+}
+
+#footer-text {
+  max-width: none;
+  margin: 0 auto;
+  padding-left: var(--footer-padding-x, 32px);
+  padding-right: var(--footer-padding-x, 32px);
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+}
+
+/* ==========================================================================
+   Encabezado
+   ========================================================================== */
+
+#header {
+  padding-top: 32px;
+  padding-bottom: 16px;
+}
+
+#header > h1 {
+  margin: 0;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+/* ==========================================================================
+   Tabla de contenido lateral (toc2 toc-right)
+   ========================================================================== */
+
+@media (min-width: 1280px) {
+  body.toc2.toc-right {
+    padding-right: var(--toc-width);
+  }
+
+  #toc.toc2 {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: var(--toc-width);
+    height: 100vh;
+    overflow-y: auto;
+    padding: 32px 24px;
+    border-left: 1px solid var(--color-border);
+    background: var(--color-bg-secondary);
+  }
+}
+
+#toctitle {
+  margin: 0 0 16px 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+#toc ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#toc li {
+  margin: 0.25rem 0;
+}
+
+#toc ul ul {
+  margin-left: 1rem;
+}
+
+#toc a {
+  display: block;
+  padding: 2px 0;
+  color: var(--color-text-muted);
+  font-size: 0.9375rem;
+}
+
+#toc a:hover {
+  color: var(--color-link);
+  text-decoration: none;
+}
+
+/* ==========================================================================
+   Tipografía
+   ========================================================================== */
+
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 1.5em;
+  margin-bottom: 0.75em;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+h1 {
+  font-size: 2rem;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 0.3em;
+}
+
+h2 {
+  font-size: 1.5rem;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 0.3em;
+}
+
+h3 {
+  font-size: 1.25rem;
+}
+
+h4 {
+  font-size: 1rem;
+}
+
+p {
+  margin: 0 0 1rem;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--color-border);
+  margin: 24px 0;
+}
+
+/* ==========================================================================
+   Listas
+   ========================================================================== */
+
+ul,
+ol {
+  margin: 0 0 1rem 1.5rem;
+  padding: 0;
+}
+
+li {
+  margin: 0.25rem 0;
+}
+
+dt {
+  font-weight: 600;
+  margin-top: 1rem;
+}
+
+dd {
+  margin-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+/* ==========================================================================
+   Bloques de código
+   ========================================================================== */
+
+code,
+kbd {
+  font-family:
+    ui-monospace,
+    SFMono-Regular,
+    SFMono-Regular,
+    Consolas,
+    "Liberation Mono",
+    Menlo,
+    monospace;
+  font-size: 0.875em;
+}
+
+:not(pre) > code {
+  padding: 0.2em 0.4em;
+  background: var(--color-code-bg);
+  border-radius: 6px;
+}
+
+pre {
+  margin: 0 0 1rem;
+  padding: 16px;
+  overflow: auto;
+  background: var(--color-pre-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  line-height: 1.45;
+}
+
+pre code {
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+}
+
+/* ==========================================================================
+   Citas
+   ========================================================================== */
+
+blockquote {
+  margin: 0 0 1rem;
+  padding: 0 1rem;
+  color: var(--color-text-muted);
+  border-left: 4px solid var(--color-blockquote-border);
+}
+
+/* ==========================================================================
+   Tablas
+   ========================================================================== */
+
+table {
+  width: 100%;
+  margin: 0 0 1rem;
+  border-collapse: collapse;
+  display: block;
+  overflow-x: auto;
+}
+
+th,
+td {
+  padding: 6px 13px;
+  border: 1px solid var(--color-border);
+}
+
+th {
+  font-weight: 600;
+  background: var(--color-bg-secondary);
+}
+
+tr:nth-child(even) {
+  background: var(--color-table-row);
+}
+
+/* ==========================================================================
+   Imágenes
+   ========================================================================== */
+
+.imageblock {
+  margin: 1.5rem 0;
+  text-align: center;
+}
+
+.imageblock > .title {
+  margin-top: 0.5rem;
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+}
+
+/* ==========================================================================
+   Bloques especiales
+   ========================================================================== */
+
+.admonitionblock {
+  margin: 1.5rem 0;
+}
+
+.admonitionblock > table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.admonitionblock td {
+  border: none;
+  padding: 0;
+}
+
+.admonitionblock td.icon {
+  width: 4rem;
+  text-align: center;
+  vertical-align: top;
+  padding-right: 1rem;
+}
+
+.admonitionblock td.content {
+  padding: 1rem;
+  border-left: 4px solid var(--color-note);
+  background: var(--color-bg-secondary);
+  border-radius: 0 6px 6px 0;
+}
+
+.admonitionblock td.icon .title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+}
+
+.admonitionblock td.content > :last-child {
+  margin-bottom: 0;
+}
+
+/* Colores por tipo */
+.admonitionblock td.icon .icon-note::before,
+.admonitionblock td.content .title {
+  color: var(--color-note);
+}
+
+.admonitionblock td.icon .icon-tip::before {
+  color: var(--color-tip);
+}
+
+.admonitionblock td.icon .icon-warning::before {
+  color: var(--color-warning);
+}
+
+.admonitionblock td.icon .icon-important::before {
+  color: var(--color-important);
+}
+
+.admonitionblock td.icon .icon-caution::before {
+  color: var(--color-caution);
+}
+
+
+/* ==========================================================================
+   Iconos de admoniciones (Font Awesome 4.7)
+   ========================================================================== */
+
+.admonitionblock td.icon .icon-note::before,
+.admonitionblock td.icon .icon-tip::before,
+.admonitionblock td.icon .icon-warning::before,
+.admonitionblock td.icon .icon-important::before,
+.admonitionblock td.icon .icon-caution::before {
+  font-family: FontAwesome;
+  font-size: 2rem;
+  display: inline-block;
+  line-height: 1;
+}
+
+/* Íconos específicos */
+.admonitionblock td.icon .icon-note::before {
+  content: "\f05a"; /* info-circle */
+}
+
+.admonitionblock td.icon .icon-tip::before {
+  content: "\f0eb"; /* lightbulb-o */
+}
+
+.admonitionblock td.icon .icon-warning::before {
+  content: "\f071"; /* exclamation-triangle */
+}
+
+.admonitionblock td.icon .icon-important::before {
+  content: "\f06a"; /* exclamation-circle */
+}
+
+.admonitionblock td.icon .icon-caution::before {
+  content: "\f06d"; /* fire */
+}
+
+/* ==========================================================================
+   Example / Sidebar
+   ========================================================================== */
+
+.exampleblock > .content,
+.sidebarblock {
+  margin: 1.5rem 0;
+  padding: 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  background: var(--color-bg-secondary);
+}
+
+.sidebarblock > .content > .title,
+.exampleblock > .title {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+/* ==========================================================================
+   Anchors
+   ========================================================================== */
+
+a.anchor {
+  float: left;
+  margin-left: -1.25em;
+  padding-right: 0.25em;
+  color: var(--color-link);
+  opacity: 0;
+}
+
+h1:hover > a.anchor,
+h2:hover > a.anchor,
+h3:hover > a.anchor,
+h4:hover > a.anchor,
+h5:hover > a.anchor,
+h6:hover > a.anchor {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   Footnotes
+   ========================================================================== */
+
+#footnotes {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--color-border);
+}
+
+#footnotes .footnote {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 1279px) {
+  #toc.toc2 {
+    position: static;
+    width: auto;
+    height: auto;
+    margin-top: 1rem;
+    padding: 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    background: var(--color-bg-secondary);
+  }
+}
+
+@media (max-width: 768px) {
+  #header,
+  #content,
+  #footnotes,
+  #footnotes {
+    padding-left: var(--content-padding-x-mobile);
+    padding-right: var(--content-padding-x-mobile);
+  }
+
+  #footer-text {
+    padding-left: var(--footer-padding-x-mobile);
+    padding-right: var(--footer-padding-x-mobile);
+  }
+
+  #header > h1 {
+    font-size: 1.75rem;
+  }
+
+  h1 {
+    font-size: 1.75rem;
+  }
+
+  h2 {
+    font-size: 1.375rem;
+  }
+
+  h3 {
+    font-size: 1.125rem;
+  }
+}
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="res/scripts/theme-switcher.js"></script>
+</head>
+<body class="article toc2 toc-right">
+<div id="header">
+<h1>Guía de instalación de Git</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Contenido</div>
+<ul class="sectlevel1">
+<li><a href="#_pasos_de_instalación">Pasos de instalación</a>
+<ul class="sectlevel2">
+<li><a href="#_01_descarga">01 Descarga</a></li>
+<li><a href="#_02_instalación">02 Instalación</a></li>
+</ul>
+</li>
+<li><a href="#_comprobar_instalación">Comprobar instalación</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_pasos_de_instalación">Pasos de instalación</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_01_descarga">01 Descarga</h3>
+<div class="paragraph">
+<p>Git proporciona un enlace oficial para la descarga del instalador en windows (<a href="https://git-scm.com/install/windows" class="bare">https://git-scm.com/install/windows</a>). Para obtenerlo, ingresar al link y dar click al enlace de descarga de la versión <em>Git for Windows/x64 Setup</em> tal y como se muestra en <a href="#git-standalone-link">Figura 1</a>.</p>
+</div>
+<div id="git-standalone-link" class="imageblock">
+<div class="content">
+<img src="./assets/imgs/GitStandaloneLink.png" alt="Link de descarga de Git para usuario windows" width="700">
+</div>
+<div class="title">Figura 1. Link de descarga de la versión de Git a nivel de usuario.</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_02_instalación">02 Instalación</h3>
+<div class="paragraph">
+<p>Una vez descargado el instalador, lo siguiente es darle doble click para ejecutarlo y realizar los siguientes pasos en cada una de las pantallas que se nos presentan.</p>
+</div>
+<div class="sect3">
+<h4 id="_licencia_de_uso">Licencia de uso</h4>
+<div class="paragraph">
+<p>La primera pantalla nos muestra la licencia de uso de Git. Esta es la licencia estandarizada <em>GNU General Public License</em> la cual le entrega al usuario final el uso libre e irrestricto del producto. En esta pantalla solo damos click en "next/siguiente".</p>
+</div>
+<div id="git-screen-license" class="imageblock">
+<div class="content">
+<img src="./assets/imgs/GitScreenLicense.png" alt="Pantalla de la licencia de uso de Git" width="500">
+</div>
+<div class="title">Figura 2. Pantalla de la licencia de uso de Git.</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_carpeta_de_destino">Carpeta de destino</h4>
+<div class="paragraph">
+<p>En esta pantalla se nos pide que indiquemos la ruta en la que se va a guardar el programa. Si la ruta que aparece por defecto es parecida a la que se muestra en <a href="#git-screen-path">Figura 3</a> no hay cambiarla. Es decir la estructura de la ruta debe ser: <code>C:\Users\&lt;INTRODUCIR USUARIO DE RED&gt;\AppData\Local\Programs\Git</code> .</p>
+</div>
+<div class="paragraph">
+<p>De no ser así, hay que introducir en el campo de texto proporcionado la ruta indicada anteriormente cambiando la sección <code>&lt;INTRODUCIR USUARIO DE RED&gt;</code> por el usuario de red del equipo. Una vez verificada la ruta damos click en "next/siguiente".</p>
+</div>
+<div id="git-screen-path" class="imageblock">
+<div class="content">
+<img src="./assets/imgs/GitScreenPath.png" alt="Pantalla de selección de ruta para Git" width="500">
+</div>
+<div class="title">Figura 3. Pantalla de selección de ruta para Git.</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_seleccionar_componentes">Seleccionar componentes</h4>
+<div class="paragraph">
+<p>En esta pantalla nos piden seleccionar los componentes que deseamos instalar junto con Git. Asegurarse de tener las mismas opciones seleccionadas que en <a href="#git-screen-components">Figura 4</a> y después presionar "next/siguiente".</p>
+</div>
+<div id="git-screen-components" class="imageblock">
+<div class="content">
+<img src="./assets/imgs/GitScreenComponents.png" alt="Pantalla de selección de componentes" width="500">
+</div>
+<div class="title">Figura 4. Pantalla de selección de componentes.</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_carpeta_de_menu_de_inicio">Carpeta de menu de inicio</h4>
+<div class="paragraph">
+<p>En esta pantalla se nos pregunta bajo cual carpeta se va a agregar el programa en el menu de inicio de windows. Solo se debe presionar "next/siguiente" sin cambiar nada.</p>
+</div>
+<div id="git-screen-start-menu" class="imageblock">
+<div class="content">
+<img src="./assets/imgs/GitScreenStartMenu.png" alt="Pantalla de menu de inicio" width="500">
+</div>
+<div class="title">Figura 5. Pantalla de menu de inicio.</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_selección_de_editor_de_texto">Selección de editor de texto</h4>
+<div class="paragraph">
+<p>En esta pantalla se nos pide que indiquemos cual va a ser el editor de texto usado en Git. <strong>Es ampliamente recomendado a los que no estén familiarizados con Git usar el editor Nano</strong>. Se debe buscar la opción <em>Use the Nano editor by default / usar el editor Nano por defecto</em> dentro de la lista desplegable y seleccionarla tal y como se muestra en <a href="#git-screen-text-editor">Figura 6</a>. Posterior mente presionar "next/siguiente".</p>
+</div>
+<div id="git-screen-text-editor" class="imageblock">
+<div class="content">
+<img src="./assets/imgs/GitScreenTextEditor.png" alt="Pantalla de editor de texto" width="500">
+</div>
+<div class="title">Figura 6. Pantalla de editor de texto.</div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Si no selecciona el editor nano en esta pantalla, luego más adelante se puede modificar usando comandos de Git. Sin embargo, no es un proceso amigable con un usuario que no este familiarizado con Git. Se recomienda seguir las indicaciones de esta pantalla para evitar percances.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_selección_de_rama_inicial">Selección de rama inicial</h4>
+<div class="paragraph">
+<p>Cuando se quiere empezar a llevar un control de versiones de una carpeta o archivo con Git se debe crear una rama inicial de trabajo. En esta pantalla se nos pide definir el nombre de dicha rama inicial. Se debe seleccionar la segunda opción tal y como se muestra en <a href="#git-screen-main-branch">Figura 7</a> y asegurarse que el nombre de la rama quede como <code>main</code> sin espacios y en minúsculas. Después dar click en "next/siguiente".</p>
+</div>
+<div id="git-screen-main-branch" class="imageblock">
+<div class="content">
+<img src="./assets/imgs/GitScreenMainBranch.png" alt="Pantalla de rama inicial" width="500">
+</div>
+<div class="title">Figura 7. Pantalla de rama inicial.</div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+El nombre de la rama inicial tiene nada especial. Sin embargo, se recomienda utilizar <code>main</code> pues será el mismo nombre utilizado en el curso y esto evitará confusiones alrededor de un concepto que va a ser tratado transversalmente.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_ambientes_de_git">Ambientes de Git</h4>
+<div class="paragraph">
+<p>En esta pantalla se nos pide indicar desde que entornos se va a permitir ejecutar Git. Seleccionar la segunda opción y presionar "next/siguiente".</p>
+</div>
+<div id="git-screen-environment" class="imageblock">
+<div class="content">
+<img src="./assets/imgs/GitScreenEnvironment.png" alt="Pantalla de ambiente de ejecución" width="500">
+</div>
+<div class="title">Figura 8. Pantalla de ambiente de ejecución.</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_programa_para_comunicación_encriptada">Programa para comunicación encriptada</h4>
+<div class="paragraph">
+<p>Git utiliza openSSH para gestionar la comunicación a sitios remotos. En esta pantalla se debe seleccionar <em>Use bundled OpenSSh / usar OpenSSH proporcionado</em> para utilizar el paquete de OpenSSH proporcionado por Git. Posteriormente dar click en "next/siguiente".</p>
+</div>
+<div id="git-screen-ssh" class="imageblock">
+<div class="content">
+<img src="./assets/imgs/GitScreenSsh.png" alt="Pantalla de selección paquete SSH" width="500">
+</div>
+<div class="title">Figura 9. Pantalla de selección paquete SSH.</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_certificados_ssl">Certificados SSL</h4>
+<div class="paragraph">
+<p>Otro protocolo de comunicación es http (el mismo que usamos al conectarnos a paginas web) el cual usa certificados SSL para verificar la seguridad del sitio. En esta pantalla se nos pide que seleccionemos de dónde va a tomar Git esos certificados. Se debe seleccionar la segunda opción para usar los certificados de windows proporcionados directamente por el administrador del equipo. Posterior mente dar click en "next/siguiente".</p>
+</div>
+<div id="git-screen-ssl" class="imageblock">
+<div class="content">
+<img src="./assets/imgs/GitScreenSsl.png" alt="Pantalla de selección certificados SSL" width="500">
+</div>
+<div class="title">Figura 10. Pantalla de selección certificados SSL.</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_estilo_de_saltos_de_línea">Estilo de saltos de línea</h4>
+<div class="paragraph">
+<p>Los saltos de línea o "Enters" en un texto son codificados de forma diferente según el sistema operativo del computador que los lea. En esta pantalla se nos pide indicar la forma en la que Git va a tratar los saldos de línea. Se Debe seleccionar la primera opción y posteriormente seleccionar "next/siguiente".</p>
+</div>
+<div id="git-screen-line-ending" class="imageblock">
+<div class="content">
+<img src="./assets/imgs/GitScreenLineEnding.png" alt="Pantalla de selección codificación de saltos de línea" width="500">
+</div>
+<div class="title">Figura 11. Pantalla de selección codificación de saltos de línea.</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_terminal_de_comandos">Terminal de comandos</h4>
+<div class="paragraph">
+<p>En esta pantalla se nos pide seleccionar la terminal desde la cual se van a ejecutar los comandos de Git. Se debe seleccionar la primera opción y posteriormente dar "next/siguiente".</p>
+</div>
+<div id="git-screen-terminal" class="imageblock">
+<div class="content">
+<img src="./assets/imgs/GitScreenTerminal.png" alt="Pantalla de selección terminal de comandos" width="500">
+</div>
+<div class="title">Figura 12. Pantalla de selección terminal de comandos.</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_comportamiento_de_pull">Comportamiento de pull</h4>
+<div class="paragraph">
+<p>Pull es una función de git para traer información desde sitios remotos. En esta pantalla se nos pide indicar el comportamiento por defecto de dicha función. Se debe seleccionar la opción <em>Fast-forward or merge</em> y posteriormente dar click en "next/siguiente".</p>
+</div>
+<div id="git-screen-pull" class="imageblock">
+<div class="content">
+<img src="./assets/imgs/GitScreenPull.png" alt="Pantalla de comportamiento de pull" width="500">
+</div>
+<div class="title">Figura 13. Pantalla de comportamiento de pull.</div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+De no seleccionar esta opción para el comportamiento de pull. Varios ejercicios tratados en el curso van a tener un resultado diferente al esperado.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_administrador_de_credenciales">Administrador de credenciales</h4>
+<div class="paragraph">
+<p>En esta pantalla se nos pide indicar el administrador de credenciales que queremos que use en Git a plataformas como GitHub. Se debe seleccionar la primera opción y posteriormente dar click en "next/siguiente".</p>
+</div>
+<div id="git-screen-credential-manager" class="imageblock">
+<div class="content">
+<img src="./assets/imgs/GitScreenCredentialManager.png" alt="Pantalla de selección del administrador de credenciales" width="500">
+</div>
+<div class="title">Figura 14. Pantalla de selección del administrador de credenciales.</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_opciones_adicionales">Opciones adicionales</h4>
+<div class="paragraph">
+<p>En esta pantalla se nos pide seleccionar las opciones adicionales que queremos configurar en Git. Se deben marcar las mismas que se muestran en <a href="#git-screen-extra-options">Figura 15</a> y posteriormente dar click en "install/instalar"</p>
+</div>
+<div id="git-screen-extra-options" class="imageblock">
+<div class="content">
+<img src="./assets/imgs/GitScreenExtraOptions.png" alt="Pantalla de opciones adicionales" width="500">
+</div>
+<div class="title">Figura 15. Pantalla de opciones adicionales.</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_pantalla_final">Pantalla final</h4>
+<div class="paragraph">
+<p>Después de presionar "install/instalar" se empezará a instalar Git según las configuraciones seleccionadas. El avance va a ser indicado por una barra de progreso y cuando esta llegue al final se mostrara la pantalla mostrada a continuación. Aquí solo debemos desmarcar cada casilla y presionar "finish/terminar".</p>
+</div>
+<div id="git-screen-end" class="imageblock">
+<div class="content">
+<img src="./assets/imgs/GitScreenEnd.png" alt="Pantalla final" width="500">
+</div>
+<div class="title">Figura 16. Pantalla final.</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_comprobar_instalación">Comprobar instalación</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>En un principió si llegamos a la pantalla final de la sección anterior se podría asegurar que Git quedó instalado. Sin embargo, si se quiere verificar la instalación con la correcta configuración se puede oprimir la combinación de teclas <code>'windows' + 'r'</code> o buscar el programa "ejecutar" en la barra de búsqueda de windows. Posteriormente dentro de este programa introducir el siguiente texto: <code>wt -p "Git Bash"</code> manteniendo los mismos, espacios, comillas y mayúsculas. Al presionar 'Enter' o darle al botón "Aceptar" debería aparecer una ventana como la mostrada en <a href="#git-bash-windows-terminal">Figura 17</a>.</p>
+</div>
+<div id="git-bash-windows-terminal" class="imageblock">
+<div class="content">
+<img src="./assets/imgs/GitBashWindowsTerminal.png" alt="Terminal de comandos de Git en windows" width="500">
+</div>
+<div class="title">Figura 17. Terminal de comandos de Git en windows.</div>
+</div>
+<div class="paragraph">
+<p>Por último en la ventana que apareció pegar el siguiente texto <code>git config --list --show-scope</code> y presionar 'Enter'. La salida debería ser similar a la siguiente:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>system  diff.astextplain.textconv=astextplain
+system  filter.lfs.clean=git-lfs clean -- %f
+system  filter.lfs.smudge=git-lfs smudge -- %f
+system  filter.lfs.process=git-lfs filter-process
+system  filter.lfs.required=true
+system  http.sslbackend=schannel
+system  core.autocrlf=true
+system  core.fscache=true
+system  core.symlinks=true
+system  core.editor=nano.exe
+system  pull.rebase=false
+system  credential.helper=manager
+system  credential.https://dev.azure.com.usehttppath=true
+system  init.defaultbranch=main</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Con esto concluimos con la instalación de Git.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+¡Felicidades, ya puedes empezar a escribir todos los comandos que quieras!
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2026-05-19 22:03:31 -0500
+</div>
+</div>
+</body>
+</html>
