@@ -1,0 +1,173 @@
+= Guía de instalación de Git
+:toc-title: Contenido
+:toc: right
+:figure-caption: Figura
+:icons: font
+:stylesdir: ./res/styles/
+:stylesheet: github-md.css
+:docinfo: private
+:docinfodir: ./res/docinfo/
+:imagesdir: ./assets/imgs/
+:attachmentsdir: ./assets/attachments/
+:diagramsdir: ./assets/diagrams/
+:diagram-cachedir: ./.cache/diagrams/
+:xrefstyle: short
+
+== Pasos de instalación
+
+=== 01 Descarga
+Git proporciona un enlace oficial para la descarga del instalador en windows (https://git-scm.com/install/windows). Para obtenerlo, ingresar al link y dar click al enlace de descarga de la versión _Git for Windows/x64 Setup_ tal y como se muestra en <<git-standalone-link>>.
+
+.Link de descarga de la versión de Git a nivel de usuario.
+[#git-standalone-link]
+image::GitStandaloneLink.png[Link de descarga de Git para usuario windows,700]
+
+=== 02 Instalación
+
+Una vez descargado el instalador, lo siguiente es darle doble click para ejecutarlo y realizar los siguientes pasos en cada una de las pantallas que se nos presentan.
+
+==== Licencia de uso
+La primera pantalla nos muestra la licencia de uso de Git. Esta es la licencia estandarizada _GNU General Public License_ la cual le entrega al usuario final el uso libre e irrestricto del producto. En esta pantalla solo damos click en "next/siguiente".
+
+.Pantalla de la licencia de uso de Git.
+[#git-screen-license]
+image::GitScreenLicense.png[Pantalla de la licencia de uso de Git,500]
+
+==== Carpeta de destino
+En esta pantalla se nos pide que indiquemos la ruta en la que se va a guardar el programa. Si la ruta que aparece por defecto es parecida a la que se muestra en <<git-screen-path>> no hay cambiarla. Es decir la estructura de la ruta debe ser: `C:\Users\<INTRODUCIR USUARIO DE RED>\AppData\Local\Programs\Git` .
+
+De no ser así, hay que introducir en el campo de texto proporcionado la ruta indicada anteriormente cambiando la sección `<INTRODUCIR USUARIO DE RED>` por el usuario de red del equipo. Una vez verificada la ruta damos click en "next/siguiente".
+
+.Pantalla de selección de ruta para Git.
+[#git-screen-path]
+image::GitScreenPath.png[Pantalla de selección de ruta para Git,500]
+
+==== Seleccionar componentes
+En esta pantalla nos piden seleccionar los componentes que deseamos instalar junto con Git. Asegurarse de tener las mismas opciones seleccionadas que en <<git-screen-components>> y después presionar "next/siguiente".
+
+.Pantalla de selección de componentes.
+[#git-screen-components]
+image::GitScreenComponents.png[Pantalla de selección de componentes,500]
+
+
+==== Carpeta de menu de inicio
+En esta pantalla se nos pregunta bajo cual carpeta se va a agregar el programa en el menu de inicio de windows. Solo se debe presionar "next/siguiente" sin cambiar nada.
+
+.Pantalla de menu de inicio.
+[#git-screen-start-menu]
+image::GitScreenStartMenu.png[Pantalla de menu de inicio,500]
+
+==== Selección de editor de texto
+En esta pantalla se nos pide que indiquemos cual va a ser el editor de texto usado en Git. *Es ampliamente recomendado a los que no estén familiarizados con Git usar el editor Nano*. Se debe buscar la opción _Use the Nano editor by default / usar el editor Nano por defecto_ dentro de la lista desplegable y seleccionarla tal y como se muestra en <<git-screen-text-editor>>. Posterior mente presionar "next/siguiente".
+
+.Pantalla de editor de texto.
+[#git-screen-text-editor]
+image::GitScreenTextEditor.png[Pantalla de editor de texto,500]
+
+WARNING: Si no selecciona el editor nano en esta pantalla, luego más adelante se puede modificar usando comandos de Git. Sin embargo, no es un proceso amigable con un usuario que no este familiarizado con Git. Se recomienda seguir las indicaciones de esta pantalla para evitar percances.
+
+==== Selección de rama inicial
+Cuando se quiere empezar a llevar un control de versiones de una carpeta o archivo con Git se debe crear una rama inicial de trabajo. En esta pantalla se nos pide definir el nombre de dicha rama inicial. Se debe seleccionar la segunda opción tal y como se muestra en <<git-screen-main-branch>> y asegurarse que el nombre de la rama quede como `main` sin espacios y en minúsculas. Después dar click en "next/siguiente".
+
+.Pantalla de rama inicial.
+[#git-screen-main-branch]
+image::GitScreenMainBranch.png[Pantalla de rama inicial,500]
+
+WARNING: El nombre de la rama inicial tiene nada especial. Sin embargo, se recomienda utilizar `main` pues será el mismo nombre utilizado en el curso y esto evitará confusiones alrededor de un concepto que va a ser tratado transversalmente.
+
+==== Ambientes de Git
+En esta pantalla se nos pide indicar desde que entornos se va a permitir ejecutar Git. Seleccionar la segunda opción y presionar "next/siguiente".
+
+.Pantalla de ambiente de ejecución.
+[#git-screen-environment]
+image::GitScreenEnvironment.png[Pantalla de ambiente de ejecución,500]
+
+==== Programa para comunicación encriptada
+Git utiliza openSSH para gestionar la comunicación a sitios remotos. En esta pantalla se debe seleccionar _Use bundled OpenSSh / usar OpenSSH proporcionado_ para utilizar el paquete de OpenSSH proporcionado por Git. Posteriormente dar click en "next/siguiente".
+
+.Pantalla de selección paquete SSH.
+[#git-screen-ssh]
+image::GitScreenSsh.png[Pantalla de selección paquete SSH,500]
+
+==== Certificados SSL
+Otro protocolo de comunicación es http (el mismo que usamos al conectarnos a paginas web) el cual usa certificados SSL para verificar la seguridad del sitio. En esta pantalla se nos pide que seleccionemos de dónde va a tomar Git esos certificados. Se debe seleccionar la segunda opción para usar los certificados de windows proporcionados directamente por el administrador del equipo. Posterior mente dar click en "next/siguiente".
+
+.Pantalla de selección certificados SSL.
+[#git-screen-ssl]
+image::GitScreenSsl.png[Pantalla de selección certificados SSL,500]
+
+==== Estilo de saltos de línea
+Los saltos de línea o "Enters" en un texto son codificados de forma diferente según el sistema operativo del computador que los lea. En esta pantalla se nos pide indicar la forma en la que Git va a tratar los saldos de línea. Se Debe seleccionar la primera opción y posteriormente seleccionar "next/siguiente".
+
+.Pantalla de selección codificación de saltos de línea.
+[#git-screen-line-ending]
+image::GitScreenLineEnding.png[Pantalla de selección codificación de saltos de línea,500]
+
+
+==== Terminal de comandos
+En esta pantalla se nos pide seleccionar la terminal desde la cual se van a ejecutar los comandos de Git. Se debe seleccionar la primera opción y posteriormente dar "next/siguiente".
+
+.Pantalla de selección terminal de comandos.
+[#git-screen-terminal]
+image::GitScreenTerminal.png[Pantalla de selección terminal de comandos,500]
+
+==== Comportamiento de pull
+Pull es una función de git para traer información desde sitios remotos. En esta pantalla se nos pide indicar el comportamiento por defecto de dicha función. Se debe seleccionar la opción _Fast-forward or merge_ y posteriormente dar click en "next/siguiente".
+
+.Pantalla de comportamiento de pull.
+[#git-screen-pull]
+image::GitScreenPull.png[Pantalla de comportamiento de pull,500]
+
+WARNING: De no seleccionar esta opción para el comportamiento de pull. Varios ejercicios tratados en el curso van a tener un resultado diferente al esperado.
+
+==== Administrador de credenciales
+En esta pantalla se nos pide indicar el administrador de credenciales que queremos que use en Git a plataformas como GitHub. Se debe seleccionar la primera opción y posteriormente dar click en "next/siguiente".
+
+.Pantalla de selección del administrador de credenciales.
+[#git-screen-credential-manager]
+image::GitScreenCredentialManager.png[Pantalla de selección del administrador de credenciales,500]
+
+==== Opciones adicionales
+En esta pantalla se nos pide seleccionar las opciones adicionales que queremos configurar en Git. Se deben marcar las mismas que se muestran en <<git-screen-extra-options>> y posteriormente dar click en "install/instalar"
+
+.Pantalla de opciones adicionales.
+[#git-screen-extra-options]
+image::GitScreenExtraOptions.png[Pantalla de opciones adicionales,500]
+
+==== Pantalla final
+Después de presionar "install/instalar" se empezará a instalar Git según las configuraciones seleccionadas. El avance va a ser indicado por una barra de progreso y cuando esta llegue al final se mostrara la pantalla mostrada a continuación. Aquí solo debemos desmarcar cada casilla y presionar "finish/terminar".
+
+.Pantalla final.
+[#git-screen-end]
+image::GitScreenEnd.png[Pantalla final,500]
+
+== Comprobar instalación
+En un principió si llegamos a la pantalla final de la sección anterior se podría asegurar que Git quedó instalado. Sin embargo, si se quiere verificar la instalación con la correcta configuración se puede oprimir la combinación de teclas `'windows' + 'r'` o buscar el programa "ejecutar" en la barra de búsqueda de windows. Posteriormente dentro de este programa introducir el siguiente texto: `wt -p "Git Bash"` manteniendo los mismos, espacios, comillas y mayúsculas. Al presionar 'Enter' o darle al botón "Aceptar" debería aparecer una ventana como la mostrada en <<git-bash-windows-terminal>>.
+
+.Terminal de comandos de Git en windows.
+[#git-bash-windows-terminal]
+image::GitBashWindowsTerminal.png[Terminal de comandos de Git en windows,500]
+
+Por último en la ventana que apareció pegar el siguiente texto `git config --list --show-scope` y presionar 'Enter'. La salida debería ser similar a la siguiente:
+
+[source]
+....
+system  diff.astextplain.textconv=astextplain
+system  filter.lfs.clean=git-lfs clean -- %f
+system  filter.lfs.smudge=git-lfs smudge -- %f
+system  filter.lfs.process=git-lfs filter-process
+system  filter.lfs.required=true
+system  http.sslbackend=schannel
+system  core.autocrlf=true
+system  core.fscache=true
+system  core.symlinks=true
+system  core.editor=nano.exe
+system  pull.rebase=false
+system  credential.helper=manager
+system  credential.https://dev.azure.com.usehttppath=true
+system  init.defaultbranch=main
+....
+
+Con esto concluimos con la instalación de Git.
+
+TIP:  ¡Felicidades, ya puedes empezar a escribir todos los comandos que quieras!

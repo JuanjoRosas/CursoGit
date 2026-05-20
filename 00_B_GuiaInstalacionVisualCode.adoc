@@ -1,0 +1,100 @@
+= Guía de instalación de Visual Studio Code
+:toc-title: Contenido
+:toc: right
+:figure-caption: Figura
+:icons: font
+:stylesdir: ./res/styles/
+:stylesheet: github-md.css
+:docinfo: private
+:docinfodir: ./res/docinfo/
+:imagesdir: ./assets/imgs/
+:attachmentsdir: ./assets/attachments/
+:diagramsdir: ./assets/diagrams/
+:diagram-cachedir: ./.cache/diagrams/
+:xrefstyle: short
+
+== Pasos de instalación
+
+=== 01 Descarga
+
+Para descargar Visual Studio Code (VSCode) se debe acceder a https://code.visualstudio.com[su pagina oficial] y dar click al botón indicado en <<vs-code-download>>. Después de esto la descarga del instalador empezará automáticamente.
+
+.Botón de descarga instalador VSCode
+[#vs-code-download]
+image::VSCodeDownload.png[Botón de descarga instalador VSCode,700]
+
+=== 02 Instalación
+
+Una vez descargado el instalador, lo siguiente es darle doble click para ejecutarlo y realizar los siguientes pasos en cada una de las pantallas que se nos presentan.
+
+==== Acuerdos de licencia
+La primera pantalla nos muestran los acuerdos de licencia de VSCode. Una vez los haya leído responsable y diligentemente puede seleccionar _Acepto el acuerdo_ y dar click a "Siguiente".
+
+.Pantalla de licencia VSCode
+[#vs-code-screen-license]
+image::VSCodeScreenLicense.png[Pantalla de licencia VSCode,500]
+
+==== Carpeta de destino
+En esta pantalla se nos pide que indiquemos la ruta en la que se va a guardar el programa. Si la ruta que aparece por defecto es parecida a la que se muestra en <<vs-code-screen-path>> no hay cambiarla. Es decir la estructura de la ruta debe ser: `C:\Users\<INTRODUCIR USUARIO DE RED>\AppData\Local\Programs\Microsoft VS Code` .
+
+De no ser así, hay que introducir en el campo de texto proporcionado la ruta indicada anteriormente cambiando la sección `<INTRODUCIR USUARIO DE RED>` por el usuario de red del equipo. Una vez verificada la ruta damos click en "Siguiente".
+
+.Pantalla de selección de ruta para VSCode.
+[#vs-code-screen-path]
+image::VSCodeScreenPath.png[Pantalla de selección de ruta para VSCode,500]
+
+==== Carpeta de menu de inicio
+En esta pantalla se nos pregunta bajo cual carpeta se va a agregar el programa en el menu de inicio de windows. Solo se debe presionar "Siguiente" sin cambiar nada.
+
+.Pantalla de menu de inicio.
+[#vs-code-screen-menu]
+image::VSCodeScreenMenu.png[Pantalla de menu de inicio,500]
+
+==== Opciones adicionales
+En esta pantalla se nos pide seleccionar las opciones adicionales que queremos configurar en VSCode. Se deben marcar las mismas que se muestran en <<vs-code-screen-extra-options>> y posteriormente dar click en "Siguiente"
+
+.Pantalla de opciones adicionales.
+[#vs-code-screen-extra-options]
+image::VSCodeScreenExtraOptions.png[Pantalla de opciones adicionales,500]
+
+==== Resumen de configuraciones
+En esta pantalla se nos muestra un resumen con las configuraciones seleccionadas para la instalación. Le damos click en "Instalar".
+
+.Pantalla de resumen de configuraciones.
+[#vs-code-screen-config-overview]
+image::VSCodeScreenConfigOverview.png[Pantalla de resumen de configuraciones,500]
+
+==== Pantalla final
+Después de presionar "Instalar" se empezará a instalar VSCode según las configuraciones seleccionadas. El avance va a ser indicado por una barra de progreso y cuando esta llegue al final se mostrara la pantalla mostrada a continuación. Aquí solo debemos marcar la casilla _Ejecutar Visual Studio Code_ presionar "Finalizar".
+
+.Pantalla final.
+[#vs-code-screen-end]
+image::VSCodeScreenEnd.png[Pantalla final,500]
+
+== Primeros pasos
+
+
+=== Bienvenida
+La primera vez que se ejecuta VSCode, se nos recibe con una pantalla de bienvenida en la que se nos solicita iniciar sesión. En esta pantalla se debe dar click al botón _Continua witouth singing/continuar sin iniciar sesión_ tal y como se muestra en <<vs-code-welcome>>.
+
+.Pantalla de bienvenida.
+[#vs-code-welcome]
+image::VSCodeWelcome.png[Pantalla de bienvenida,700]
+
+=== Aspectos
+Después nos aparecerá una pantalla en donde podremos seleccionar el aspecto del editor de texto de VSCode. En esta se selecciona el aspecto según criterio propio y se da click a "Continue/continuar"
+
+.Pantalla de elección de aspectos.
+[#vs-code-themes]
+image::VSCodeThemes.png[Pantalla de elección de aspectos,500]
+
+=== Agentes de IA
+En la última pantalla aparecen varias opciones para la configuración de agentes de IA. De aquí en adelante se puede simplemente cerrar la ventana y continuar al editor de VSCode.
+
+.Pantalla de agentes de IA.
+[#vs-code-agents]
+image::VSCodeAgents.png[Pantalla de agentes de IA,500]
+
+Con esto concluimos con la instalación de VSCode.
+
+TIP:  ¡Felicidades, ya puedes empezar a probar las características del editor!
