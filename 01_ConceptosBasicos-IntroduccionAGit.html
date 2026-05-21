@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.26">
+<title>Sesión 1-Conceptos básicos e introducción a Git</title>
+<style>
+/* ==========================================================================
+   Asciidoctor GitHub Theme
+   Inspirado en github-markdown-css
+   ========================================================================== */
+
+/* Tema claro */
+:root {
+  --color-bg: #ffffff;
+  --color-bg-secondary: #f6f8fa;
+  --color-border: #d0d7de;
+  --color-text: #24292f;
+  --color-text-muted: #57606a;
+  --color-link: #0969da;
+  --color-link-hover: #0550ae;
+  --color-code-bg: rgba(175, 184, 193, 0.2);
+  --color-pre-bg: #f6f8fa;
+
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-important: #8250df;
+  --color-caution: #cf222e;
+
+
+  --toc-width: 280px;
+  --content-width: 980px;
+  --content-padding-x: 72px;
+  --content-padding-x-mobile: 16px;
+
+  /* Nuevo padding exclusivo para el texto del footer */
+  --footer-padding-x: 32px;
+  --footer-padding-x-mobile: 16px;
+}
+
+/* Tema oscuro */
+[data-theme="dark"] {
+  --color-bg: #0d1117;
+  --color-bg-secondary: #161b22;
+  --color-border: #30363d;
+  --color-text: #c9d1d9;
+  --color-text-muted: #8b949e;
+  --color-link: #58a6ff;
+  --color-link-hover: #79c0ff;
+  --color-code-bg: rgba(110, 118, 129, 0.4);
+  --color-pre-bg: #161b22;
+
+  --color-note: #58a6ff;
+  --color-tip: #3fb950;
+  --color-warning: #d29922;
+  --color-important: #bc8cff;
+  --color-caution: #f85149;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    "Noto Sans",
+    Helvetica,
+    Arial,
+    sans-serif;
+  line-height: 1.6;
+  word-wrap: break-word;
+}
+
+a {
+  color: var(--color-link);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--color-link-hover);
+  text-decoration: underline;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ==========================================================================
+   Layout general
+   ========================================================================== */
+
+#header,
+#content,
+#footnotes {
+  max-width: var(--content-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--content-padding-x);
+  padding-right: var(--content-padding-x);
+}
+
+#content {
+  padding-top: 24px;
+  padding-bottom: 48px;
+}
+
+#footer {
+  margin-top: 48px;
+  padding: 24px 0; /* sin padding horizontal */
+  border-top: 1px solid var(--color-border);
+  background: var(--color-bg-secondary);
+}
+
+#footer-text {
+  max-width: none;
+  margin: 0 auto;
+  padding-left: var(--footer-padding-x, 32px);
+  padding-right: var(--footer-padding-x, 32px);
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+}
+
+/* ==========================================================================
+   Encabezado
+   ========================================================================== */
+
+#header {
+  padding-top: 32px;
+  padding-bottom: 16px;
+}
+
+#header > h1 {
+  margin: 0;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+/* ==========================================================================
+   Tabla de contenido lateral (toc2 toc-right)
+   ========================================================================== */
+
+@media (min-width: 1280px) {
+  body.toc2.toc-right {
+    padding-right: var(--toc-width);
+  }
+
+  #toc.toc2 {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: var(--toc-width);
+    height: 100vh;
+    overflow-y: auto;
+    padding: 32px 24px;
+    border-left: 1px solid var(--color-border);
+    background: var(--color-bg-secondary);
+  }
+}
+
+#toctitle {
+  margin: 0 0 16px 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+#toc ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#toc li {
+  margin: 0.25rem 0;
+}
+
+#toc ul ul {
+  margin-left: 1rem;
+}
+
+#toc a {
+  display: block;
+  padding: 2px 0;
+  color: var(--color-text-muted);
+  font-size: 0.9375rem;
+}
+
+#toc a:hover {
+  color: var(--color-link);
+  text-decoration: none;
+}
+
+/* ==========================================================================
+   Tipografía
+   ========================================================================== */
+
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 1.5em;
+  margin-bottom: 0.75em;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+h1 {
+  font-size: 2rem;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 0.3em;
+}
+
+h2 {
+  font-size: 1.5rem;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 0.3em;
+}
+
+h3 {
+  font-size: 1.25rem;
+}
+
+h4 {
+  font-size: 1rem;
+}
+
+p {
+  margin: 0 0 1rem;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--color-border);
+  margin: 24px 0;
+}
+
+/* ==========================================================================
+   Listas
+   ========================================================================== */
+
+ul,
+ol {
+  margin: 0 0 1rem 1.5rem;
+  padding: 0;
+}
+
+li {
+  margin: 0.25rem 0;
+}
+
+dt {
+  font-weight: 600;
+  margin-top: 1rem;
+}
+
+dd {
+  margin-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+/* ==========================================================================
+   Bloques de código
+   ========================================================================== */
+
+code,
+kbd {
+  font-family:
+    ui-monospace,
+    SFMono-Regular,
+    SFMono-Regular,
+    Consolas,
+    "Liberation Mono",
+    Menlo,
+    monospace;
+  font-size: 0.875em;
+}
+
+:not(pre) > code {
+  padding: 0.2em 0.4em;
+  background: var(--color-code-bg);
+  border-radius: 6px;
+}
+
+pre {
+  margin: 0 0 1rem;
+  padding: 16px;
+  overflow: auto;
+  background: var(--color-pre-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  line-height: 1.45;
+}
+
+pre code {
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+}
+
+/* ==========================================================================
+   Citas
+   ========================================================================== */
+
+blockquote {
+  margin: 0 0 1rem;
+  padding: 0 1rem;
+  color: var(--color-text-muted);
+  border-left: 4px solid var(--color-blockquote-border);
+}
+
+/* ==========================================================================
+   Tablas
+   ========================================================================== */
+
+table {
+  width: 100%;
+  margin: 0 0 1rem;
+  border-collapse: collapse;
+  display: block;
+  overflow-x: auto;
+}
+
+th,
+td {
+  padding: 6px 13px;
+  border: 1px solid var(--color-border);
+}
+
+th {
+  font-weight: 600;
+  background: var(--color-bg-secondary);
+}
+
+tr:nth-child(even) {
+  background: var(--color-table-row);
+}
+
+/* ==========================================================================
+   Imágenes
+   ========================================================================== */
+
+.imageblock {
+  margin: 1.5rem 0;
+  text-align: center;
+}
+
+.imageblock > .title {
+  margin-top: 0.5rem;
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+}
+
+/* ==========================================================================
+   Bloques especiales
+   ========================================================================== */
+
+.admonitionblock {
+  margin: 1.5rem 0;
+}
+
+.admonitionblock > table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.admonitionblock td {
+  border: none;
+  padding: 0;
+}
+
+.admonitionblock td.icon {
+  width: 4rem;
+  text-align: center;
+  vertical-align: top;
+  padding-right: 1rem;
+}
+
+.admonitionblock td.content {
+  padding: 1rem;
+  border-left: 4px solid var(--color-note);
+  background: var(--color-bg-secondary);
+  border-radius: 0 6px 6px 0;
+}
+
+.admonitionblock td.icon .title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+}
+
+.admonitionblock td.content > :last-child {
+  margin-bottom: 0;
+}
+
+/* Colores por tipo */
+.admonitionblock td.icon .icon-note::before,
+.admonitionblock td.content .title {
+  color: var(--color-note);
+}
+
+.admonitionblock td.icon .icon-tip::before {
+  color: var(--color-tip);
+}
+
+.admonitionblock td.icon .icon-warning::before {
+  color: var(--color-warning);
+}
+
+.admonitionblock td.icon .icon-important::before {
+  color: var(--color-important);
+}
+
+.admonitionblock td.icon .icon-caution::before {
+  color: var(--color-caution);
+}
+
+
+/* ==========================================================================
+   Iconos de admoniciones (Font Awesome 4.7)
+   ========================================================================== */
+
+.admonitionblock td.icon .icon-note::before,
+.admonitionblock td.icon .icon-tip::before,
+.admonitionblock td.icon .icon-warning::before,
+.admonitionblock td.icon .icon-important::before,
+.admonitionblock td.icon .icon-caution::before {
+  font-family: FontAwesome;
+  font-size: 2rem;
+  display: inline-block;
+  line-height: 1;
+}
+
+/* Íconos específicos */
+.admonitionblock td.icon .icon-note::before {
+  content: "\f05a"; /* info-circle */
+}
+
+.admonitionblock td.icon .icon-tip::before {
+  content: "\f0eb"; /* lightbulb-o */
+}
+
+.admonitionblock td.icon .icon-warning::before {
+  content: "\f071"; /* exclamation-triangle */
+}
+
+.admonitionblock td.icon .icon-important::before {
+  content: "\f06a"; /* exclamation-circle */
+}
+
+.admonitionblock td.icon .icon-caution::before {
+  content: "\f06d"; /* fire */
+}
+
+/* ==========================================================================
+   Example / Sidebar
+   ========================================================================== */
+
+.exampleblock > .content,
+.sidebarblock {
+  margin: 1.5rem 0;
+  padding: 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  background: var(--color-bg-secondary);
+}
+
+.sidebarblock > .content > .title,
+.exampleblock > .title {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+/* ==========================================================================
+   Anchors
+   ========================================================================== */
+
+a.anchor {
+  float: left;
+  margin-left: -1.25em;
+  padding-right: 0.25em;
+  color: var(--color-link);
+  opacity: 0;
+}
+
+h1:hover > a.anchor,
+h2:hover > a.anchor,
+h3:hover > a.anchor,
+h4:hover > a.anchor,
+h5:hover > a.anchor,
+h6:hover > a.anchor {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   Footnotes
+   ========================================================================== */
+
+#footnotes {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--color-border);
+}
+
+#footnotes .footnote {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 1279px) {
+  #toc.toc2 {
+    position: static;
+    width: auto;
+    height: auto;
+    margin-top: 1rem;
+    padding: 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    background: var(--color-bg-secondary);
+  }
+}
+
+@media (max-width: 768px) {
+  #header,
+  #content,
+  #footnotes,
+  #footnotes {
+    padding-left: var(--content-padding-x-mobile);
+    padding-right: var(--content-padding-x-mobile);
+  }
+
+  #footer-text {
+    padding-left: var(--footer-padding-x-mobile);
+    padding-right: var(--footer-padding-x-mobile);
+  }
+
+  #header > h1 {
+    font-size: 1.75rem;
+  }
+
+  h1 {
+    font-size: 1.75rem;
+  }
+
+  h2 {
+    font-size: 1.375rem;
+  }
+
+  h3 {
+    font-size: 1.125rem;
+  }
+}
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="res/scripts/theme-switcher.js"></script>
+</head>
+<body class="article toc2 toc-right">
+<div id="header">
+<h1>Sesión 1-Conceptos básicos e introducción a Git</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Contenido</div>
+<ul class="sectlevel1">
+<li><a href="#_archivos">Archivos</a>
+<ul class="sectlevel2">
+<li><a href="#_qué_es_un_archivo">¿Qué es un archivo?</a></li>
+<li><a href="#_por_qué_los_archivos_son_como_son">¿Por qué los archivos son como son?</a></li>
+<li><a href="#_archivos_binarios_vs_planos">Archivos binarios Vs. planos</a></li>
+</ul>
+</li>
+<li><a href="#_terminal_comandos">Terminal &amp; Comandos</a>
+<ul class="sectlevel2">
+<li><a href="#_qué_es_un_comando">¿Qué es un comando?</a></li>
+<li><a href="#_qué_es_la_terminal_de_comandos">¿Qué es la terminal de comandos?</a></li>
+<li><a href="#_cli_vs_gui">CLI vs GUI</a></li>
+</ul>
+</li>
+<li><a href="#_git_el_control_de_versiones">Git &amp; el control de versiones</a>
+<ul class="sectlevel2">
+<li><a href="#_en_qué_consiste_el_control_de_versiones">¿En qué consiste el control de versiones?</a></li>
+<li><a href="#_qué_es_git">¿Qué es Git?</a></li>
+<li><a href="#_estados_de_archivos_en_git">Estados de archivos en Git</a></li>
+<li><a href="#_escenarios_de_git">Escenarios de Git</a></li>
+</ul>
+</li>
+<li><a href="#_flujo_de_trabajo_con_git">Flujo de trabajo con Git</a>
+<ul class="sectlevel2">
+<li><a href="#_creación_de_repositorio_y_seguimiento_de_archivos">Creación de repositorio y seguimiento de archivos</a></li>
+<li><a href="#_stage_y_commit">Stage y Commit</a></li>
+<li><a href="#_trazabilidad_de_commits">Trazabilidad de commits</a></li>
+</ul>
+</li>
+<li><a href="#_git_desde_visual_studio_code">Git desde Visual Studio Code.</a>
+<ul class="sectlevel2">
+<li><a href="#_flujo_de_trabajo_con_visual_studio_code">Flujo de trabajo con Visual Studio Code</a></li>
+</ul>
+</li>
+<li><a href="#_comandos_de_git">Comandos de Git</a></li>
+<li><a href="#_recursos_adicionales">Recursos adicionales</a></li>
+<li><a href="#_referencias">Referencias</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_archivos">Archivos</h2>
+<div class="sectionbody">
+<div class="imageblock text-center">
+<div class="content">
+<img src="./assets/imgs/01_Sesion/Clippy.png" alt="Clippy" width="500">
+</div>
+</div>
+<div class="sect2">
+<h3 id="_qué_es_un_archivo">¿Qué es un archivo?</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Bit</th>
+<th class="tableblock halign-left valign-top">Archivo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="imageblock text-center">
+<div class="content">
+<img src="./assets/imgs/01_Sesion/Binary.png" alt="binary" width="200">
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="imageblock text-center">
+<div class="content">
+<img src="./assets/imgs/01_Sesion/BinaryFolder.png" alt="BinaryFolder" width="200">
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Unidad mínima de información en computación y telecomunicaciones (acrónimo del inglés <em>Binary Digit</em>). [<a href="#r1">[r1]</a>]</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Un <strong>archivo</strong> o <strong>fichero</strong> es un conjunto de bits guardados de forma ordenada. [<a href="#r2">[r2]</a>]</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_por_qué_los_archivos_son_como_son">¿Por qué los archivos son como son?</h3>
+<div class="paragraph">
+<p>La forma en la que hoy en día organizamos nuestros archivos fue heredada de los primeros <strong>sistemas operativos</strong> que se adoptaron ampliamente en ambientes comerciales.</p>
+</div>
+<div id="os-png" class="imageblock text-center">
+<div class="content">
+<img src="./assets/imgs/01_Sesion/OSs.png" alt="Diferentes logos de sistemas operativos" width="500">
+</div>
+<div class="title">Figura 1. Diferentes logos de sistemas operativos.</div>
+</div>
+<div class="paragraph">
+<p>Un <strong>sistema operativo</strong> es simplemente un entorno de utilidades muy grande que nos permite a nosotros dar ordenes al computador sin necesidad de hablar su idioma. Los sistemas operativos modernos siguen una convención heredada compartida para clasificar todos los archivos. Tomemos como ejemplo el siguiente archivo:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>C:\Users\jrosas3\AppData\Local\Programs\Git\LICENSE.txt</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Sus partes serían:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">nombre completo</dt>
+<dd>
+<p><code>C:\Users\jrosas3\AppData\Local\Programs\Git\LICENSE.txt</code></p>
+</dd>
+<dt class="hdlist1">ruta</dt>
+<dd>
+<p><code>C:\Users\jrosas3\AppData\Local\Programs\Git</code></p>
+</dd>
+<dt class="hdlist1">nombre (corto)</dt>
+<dd>
+<p><code>LICENSE.txt</code></p>
+</dd>
+<dt class="hdlist1">extension</dt>
+<dd>
+<p><code>txt</code></p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_archivos_binarios_vs_planos">Archivos binarios Vs. planos</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Archivo binario <sup class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnotedef_1" title="View footnote.">1</a>]</sup></th>
+<th class="tableblock halign-left valign-top">Archivo de texto plano <sup class="footnote">[<a id="_footnoteref_2" class="footnote" href="#_footnotedef_2" title="View footnote.">2</a>]</sup></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="imageblock text-center">
+<div class="content">
+<img src="./assets/imgs/01_Sesion/Audio_formats.jpg" alt="Audio formats" width="350">
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="imageblock text-center">
+<div class="content">
+<img src="./assets/imgs/01_Sesion/ASCII_full.svg" alt="ASCII full" width="350">
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Interpretados principalmente por una gran variedad de aplicativos según su extensión.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Interpretados principalmente a través de estándares de decodificación de texto aplicados por el mismo sistema operativos o aplicativos de terceros.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_terminal_comandos">Terminal &amp; Comandos</h2>
+<div class="sectionbody">
+<div id="einac" class="imageblock text-center">
+<div class="content">
+<img src="./assets/imgs/01_Sesion/EINAC.jpg" alt="EINAC Computador e Integrador Numérico Electrónico" width="700">
+</div>
+<div class="title">Figura 2. ENIAC, acrónimo de Electronic Numerical Integrator And Computer (Computador e Integrador Numérico Electrónico).<sup class="footnote">[<a id="_footnoteref_3" class="footnote" href="#_footnotedef_3" title="View footnote.">3</a>]</sup></div>
+</div>
+<div class="sect2">
+<h3 id="_qué_es_un_comando">¿Qué es un comando?</h3>
+<div class="paragraph">
+<p>Un <strong>comando</strong> es, como su nombre lo indica, una orden entregada por el usuario al computador. En Durante varios años y antes de las interfaces gráficas (GUI, graphical user interface) los comandos eran la forma más ampliamente usada en la que los usuarios interactuaban con los computadores. La forma de uso era que el computador se quedaba esperando hasta recibir un comando en lenguaje natural (texto) y una vez lo recibía procedía a interpretarlo y devolver lo que el usuario estaba pidiendo.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_qué_es_la_terminal_de_comandos">¿Qué es la terminal de comandos?</h3>
+<div class="paragraph">
+<p>La interfaz de comandos o CLI (Command-Line Interface) es la interfaz por la cual un sistema operativo o un aplicativo reciben comandos directamente del usuario. A día de hoy cada sistema operativo tiene al menos un CLI integrado.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_cli_vs_gui">CLI vs GUI</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">CLI (Command-Line Interface)<sup class="footnote">[<a id="_footnoteref_4" class="footnote" href="#_footnotedef_4" title="View footnote.">4</a>]</sup></th>
+<th class="tableblock halign-left valign-top">GUI (Grahpical User Interface)<sup class="footnote">[<a id="_footnoteref_5" class="footnote" href="#_footnotedef_5" title="View footnote.">5</a>]</sup></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="imageblock text-center">
+<div class="content">
+<img src="./assets/imgs/01_Sesion/CLI.png" alt="CLI" width="400">
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="imageblock text-center">
+<div class="content">
+<img src="./assets/imgs/01_Sesion/GUI.png" alt="GUI" width="400">
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="ulist">
+<ul>
+<li>
+<p>Es una forma más eficiente de comunicación usuario-pc.</p>
+</li>
+<li>
+<p>Atomiza las labores del pc.</p>
+</li>
+</ul>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="ulist">
+<ul>
+<li>
+<p>Es más intuitiva.</p>
+</li>
+<li>
+<p>Se pueden utilizar elementos visuales que simplifiquen la familiarización con la interfaz.</p>
+</li>
+</ul>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_git_el_control_de_versiones">Git &amp; el control de versiones</h2>
+<div class="sectionbody">
+<div id="file-naming" class="imageblock text-center">
+<div class="content">
+<img src="./assets/imgs/01_Sesion/FileNaming.png" alt="Nombres peculiares de archivos" width="600">
+</div>
+<div class="title">Figura 3. Nombres peculiares de archivos.</div>
+</div>
+<div class="sect2">
+<h3 id="_en_qué_consiste_el_control_de_versiones">¿En qué consiste el control de versiones?</h3>
+<div class="paragraph">
+<p>Un <strong>control de versiones</strong> consiste registrar los cambios realizados en un archivo o conjunto de archivos a lo largo del tiempo, de modo que se puedan recuperar versiones específicas más adelante [<a href="#r3">[r3]</a>].</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_qué_es_git">¿Qué es Git?</h3>
+<div class="paragraph">
+<p>Git es el <strong>sistema de control de versiones (VCS)</strong> más ampliamente utilizado en la actualidad. La forma en la que Git registra los diferentes estados de los archivos a los que hace seguimiento es a través de "fotos". Si un estado de un archivo no ha cambiado de una foto a otra, no es necesario que git lo guarde de nuevo dentro de su trazabilidad interna.</p>
+</div>
+<div id="git-version-fundamentals" class="imageblock text-center">
+<div class="content">
+<img src="./assets/imgs/01_Sesion/GitVersionsBasics.png" alt="Esquema ilustrativo del funcionamiento de Git" width="600">
+</div>
+<div class="title">Figura 4. Esquema ilustrativo del funcionamiento de Git.</div>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Git no está pensado para llevar un control de versiones de archivos que no sean de texto plano o puedan ser interpretados como texto plano. Usarlo para versionar archivos binarios puede llevar a un alto consumo de memoria y una ralentización del proceso.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_estados_de_archivos_en_git">Estados de archivos en Git</h3>
+<div class="paragraph">
+<p>Git tiene tres estados principales en los que se pueden encontrar los archivos:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Confirmado (commited)</dt>
+<dd>
+<p>Significa que los datos están almacenados de manera segura en la base de datos local donde Git administra el <strong>repositorio</strong>.</p>
+</dd>
+<dt class="hdlist1">Modificado (modified)</dt>
+<dd>
+<p>Significa que se ha modificado el archivo pero todavía no se ha confirmado a la base de datos.</p>
+</dd>
+<dt class="hdlist1">Preparado (staged)</dt>
+<dd>
+<p>Significa que se ha marcado un archivo modificado en su versión actual para que vaya en la próxima confirmación.</p>
+</dd>
+</dl>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Existen otros estados pero los tres mencionados son los principales y alrededor de los cuales se estructura Git.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_escenarios_de_git">Escenarios de Git</h3>
+<div class="paragraph">
+<p>Existen tres secciones principales de un proyecto de Git:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">El directorio de Git (Git directory)</dt>
+<dd>
+<p>Es donde se almacena, entre algunas otras cosas, la base de datos local donde Git administra el <strong>repositorio</strong>. Es la parte más importante de Git.</p>
+</dd>
+<dt class="hdlist1">El directorio de trabajo (working directory)</dt>
+<dd>
+<p>Es una copia de una versión del proyecto. Estos archivos se sacan de la base de datos comprimida en el directorio de Git, y se colocan en disco para que se puedan usar o modificar.</p>
+</dd>
+<dt class="hdlist1">El área de preparación (staging area)</dt>
+<dd>
+<p>Es un archivo, generalmente contenido en el directorio de Git, que almacena información acerca de lo que va a ir en la próxima confirmación(commit).</p>
+</dd>
+</dl>
+</div>
+<div id="git-scenarios" class="imageblock text-center">
+<div class="content">
+<img src="./assets/imgs/01_Sesion/GitScenarios.png" alt="Escenarios de git las transiciones entre estos" width="600">
+</div>
+<div class="title">Figura 5. Escenarios de git las transiciones entre estos.</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_flujo_de_trabajo_con_git">Flujo de trabajo con Git</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_creación_de_repositorio_y_seguimiento_de_archivos">Creación de repositorio y seguimiento de archivos</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_stage_y_commit">Stage y Commit</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_trazabilidad_de_commits">Trazabilidad de commits</h3>
+
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_git_desde_visual_studio_code">Git desde Visual Studio Code.</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_flujo_de_trabajo_con_visual_studio_code">Flujo de trabajo con Visual Studio Code</h3>
+
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_comandos_de_git">Comandos de Git</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A continuación se muestra una tabla con los comandos más útiles y utilizados durante un día de trabajo con Git:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 14.2857%;">
+<col style="width: 28.5714%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Categoría</th>
+<th class="tableblock halign-left valign-top">Comando</th>
+<th class="tableblock halign-left valign-top">Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sistema</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>clear</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Limpia la terminal de comandos. Este no es un comando propio de Git.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configuración</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>git config --global user.name "MI NOMBRE"</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configura el nombre del usuario para los commits.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configuración</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>git config --global user.email "<a href="mailto:correo@ejemplo.com">correo@ejemplo.com</a>"</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configura el correo asociado a los commits.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configuración</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>git config --list --show-scope</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Muestra toda la configuración de Git y el scope donde está definida.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Inicialización</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>git init</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Inicializa un nuevo repositorio Git en la carpeta actual.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Inicialización</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>git clone &lt;url&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Clona un repositorio remoto.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Estado</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>git status</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Muestra el estado actual del repositorio.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Estado</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>git diff</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Muestra cambios no confirmados.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Estado</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>git diff --staged</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Muestra cambios preparados para commit.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Seguimiento</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>git add &lt;archivo&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Agrega un archivo al área de preparación (staging).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Seguimiento</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>git add .</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Agrega todos los cambios al staging.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Seguimiento</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>git restore &lt;archivo&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Descarta cambios locales de un archivo.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Seguimiento</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>git restore --staged &lt;archivo&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Saca un archivo del staging.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Commits</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>git commit -m "mensaje"</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Crea un commit con mensaje.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Commits</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>git commit --amend</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Modifica el último commit.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Historial</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>git log</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Muestra el historial de commits.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Historial</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>git log --oneline --graph --all</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Muestra historial resumido y gráfico de ramas.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Historial</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>git show &lt;hash&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Muestra detalles de un commit.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ramas</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>git branch</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Lista las ramas locales.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ramas</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>git branch &lt;rama&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Crea una nueva rama.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ramas</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>git switch &lt;rama&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cambia a otra rama.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ramas</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>git switch -c &lt;rama&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Crea y cambia a una nueva rama.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ramas</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>git branch -d &lt;rama&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Elimina una rama local.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Integración</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>git merge &lt;rama&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Fusiona una rama con la actual.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Integración</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>git rebase &lt;rama&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reaplica commits sobre otra base.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Repositorios remotos</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>git remote -v</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Lista los repositorios remotos configurados.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Repositorios remotos</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>git remote add origin &lt;url&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Agrega un repositorio remoto.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sincronización</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>git fetch</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Descarga cambios remotos sin integrarlos.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sincronización</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>git pull</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Descarga e integra cambios remotos.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sincronización</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>git push</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Envía commits al repositorio remoto.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sincronización</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>git push -u origin &lt;rama&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Publica una rama y establece seguimiento.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Etiquetas</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>git tag</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Lista etiquetas existentes.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Etiquetas</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>git tag &lt;nombre&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Crea una etiqueta.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Etiquetas</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>git push origin &lt;tag&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Publica una etiqueta en el remoto.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Deshacer cambios</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>git reset --soft HEAD~1</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Deshace el último commit conservando cambios en staging.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Deshacer cambios</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>git reset --hard HEAD~1</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Deshace el último commit eliminando cambios.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Deshacer cambios</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>git revert &lt;hash&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Revierte un commit creando uno nuevo.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Limpieza</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>git clean -fd</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Elimina archivos y carpetas no rastreados.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Stash</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>git stash</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Guarda temporalmente cambios sin commit.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Stash</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>git stash pop</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Restaura el último stash.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ayuda</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>git help &lt;comando&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Muestra ayuda de un comando.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ayuda</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>git &lt;comando&gt; --help</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Abre el manual detallado de un comando.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_recursos_adicionales">Recursos adicionales</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_referencias">Referencias</h2>
+<div class="sectionbody">
+<div class="ulist bibliography">
+<ul class="bibliography">
+<li>
+<p><a id="r1"></a>[r1] <a href="https://es.wikipedia.org/wiki/Bit" class="bare">https://es.wikipedia.org/wiki/Bit</a></p>
+</li>
+<li>
+<p><a id="r2"></a>[r2] <a href="https://www2.eii.uva.es/fund_inf/cpp/temas/10_ficheros/concepto_fichero.html" class="bare">https://www2.eii.uva.es/fund_inf/cpp/temas/10_ficheros/concepto_fichero.html</a></p>
+</li>
+<li>
+<p><a id="r3"></a>[r3] <a href="https://git-scm.com/book/es/v2" class="bare">https://git-scm.com/book/es/v2</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<hr>
+<div class="footnote" id="_footnotedef_1">
+<a href="#_footnoteref_1">1</a>. Por Nazrul Islam Nahid Majumder - Trabajo propio, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/w/index.php?curid=107234711" class="bare">https://commons.wikimedia.org/w/index.php?curid=107234711</a>
+</div>
+<div class="footnote" id="_footnotedef_2">
+<a href="#_footnoteref_2">2</a>. Por Arite - Own work. Created in Inkscape 0.44.1, CC BY-SA 3.0, <a href="https://commons.wikimedia.org/w/index.php?curid=1492981" class="bare">https://commons.wikimedia.org/w/index.php?curid=1492981</a>
+</div>
+<div class="footnote" id="_footnotedef_3">
+<a href="#_footnoteref_3">3</a>. Por Unidentified U.S. Army photographer - Image from Historic Computer Images, Dominio público, <a href="https://commons.wikimedia.org/w/index.php?curid=26253297" class="bare">https://commons.wikimedia.org/w/index.php?curid=26253297</a>
+</div>
+<div class="footnote" id="_footnotedef_4">
+<a href="#_footnoteref_4">4</a>. By The GNOME Project - Free software screenshot, GPL, <a href="https://commons.wikimedia.org/w/index.php?curid=16485488" class="bare">https://commons.wikimedia.org/w/index.php?curid=16485488</a>
+</div>
+<div class="footnote" id="_footnotedef_5">
+<a href="#_footnoteref_5">5</a>. By Software: KDE developersWallpaper: Krystian ZajdelScreenshot: Paowee - Self-taken; derivative work, GPL, <a href="https://commons.wikimedia.org/w/index.php?curid=173343847" class="bare">https://commons.wikimedia.org/w/index.php?curid=173343847</a>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2026-05-21 08:49:38 -0500
+</div>
+</div>
+</body>
+</html>

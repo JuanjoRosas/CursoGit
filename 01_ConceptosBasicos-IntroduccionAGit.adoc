@@ -1,0 +1,334 @@
+= Sesión 1-Conceptos básicos e introducción a Git
+:toc-title: Contenido
+:toc: right
+:figure-caption: Figura
+:icons: font
+:stylesdir: ./res/styles/
+:stylesheet: github-md.css
+:docinfo: private
+:docinfodir: ./res/docinfo/
+:imagesdir: ./assets/imgs/
+:attachmentsdir: ./assets/attachments/
+:diagramsdir: ./assets/diagrams/
+:diagram-cachedir: ./.cache/diagrams/
+:xrefstyle: short
+:doctype: article
+
+== Archivos
+
+image::01_Sesion/Clippy.png[Clippy,500,align=center]
+
+=== ¿Qué es un archivo?
+
+[]
+|===
+|Bit |Archivo
+
+a|image::01_Sesion/Binary.png[binary,200,align=center]
+a|image::01_Sesion/BinaryFolder.png[BinaryFolder,200,align=center]
+a|Unidad mínima de información en computación y telecomunicaciones (acrónimo del inglés _Binary Digit_). [<<r1>>] 
+a|Un *archivo* o *fichero* es un conjunto de bits guardados de forma ordenada. [<<r2>>]
+|===
+
+=== ¿Por qué los archivos son como son?
+
+La forma en la que hoy en día organizamos nuestros archivos fue heredada de los primeros *sistemas operativos* que se adoptaron ampliamente en ambientes comerciales.
+
+.Diferentes logos de sistemas operativos.
+[#os-png]
+image::01_Sesion/OSs.png[Diferentes logos de sistemas operativos,500,align=center]
+
+Un *sistema operativo* es simplemente un entorno de utilidades muy grande que nos permite a nosotros dar ordenes al computador sin necesidad de hablar su idioma. Los sistemas operativos modernos siguen una convención heredada compartida para clasificar todos los archivos. Tomemos como ejemplo el siguiente archivo:
+
+[source]
+....
+C:\Users\jrosas3\AppData\Local\Programs\Git\LICENSE.txt
+....
+
+Sus partes serían:
+
+nombre completo:: `C:\Users\jrosas3\AppData\Local\Programs\Git\LICENSE.txt`
+ruta:: `C:\Users\jrosas3\AppData\Local\Programs\Git`
+nombre (corto):: `LICENSE.txt`
+extension:: `txt`
+
+
+=== Archivos binarios Vs. planos
+
+[]
+|===
+|Archivo binario footnote:[Por Nazrul Islam Nahid Majumder - Trabajo propio, CC BY-SA 4.0, https://commons.wikimedia.org/w/index.php?curid=107234711] |Archivo de texto plano footnote:[Por Arite - Own work. Created in Inkscape 0.44.1, CC BY-SA 3.0, https://commons.wikimedia.org/w/index.php?curid=1492981]
+
+a|image::01_Sesion/Audio_formats.jpg[Audio formats,350,align=center] 
+a|image::01_Sesion/ASCII_full.svg[ASCII full,350,align=center]
+
+|Interpretados principalmente por una gran variedad de aplicativos según su extensión.
+|Interpretados principalmente a través de estándares de decodificación de texto aplicados por el mismo sistema operativos o aplicativos de terceros.
+|===
+
+== Terminal & Comandos
+
+.ENIAC, acrónimo de Electronic Numerical Integrator And Computer (Computador e Integrador Numérico Electrónico).footnote:[Por Unidentified U.S. Army photographer - Image from Historic Computer Images, Dominio público, https://commons.wikimedia.org/w/index.php?curid=26253297]
+[#einac]
+image::01_Sesion/EINAC.jpg[EINAC Computador e Integrador Numérico Electrónico,700,align=center]
+
+=== ¿Qué es un comando?
+Un *comando* es, como su nombre lo indica, una orden entregada por el usuario al computador. En Durante varios años y antes de las interfaces gráficas (GUI, graphical user interface) los comandos eran la forma más ampliamente usada en la que los usuarios interactuaban con los computadores. La forma de uso era que el computador se quedaba esperando hasta recibir un comando en lenguaje natural (texto) y una vez lo recibía procedía a interpretarlo y devolver lo que el usuario estaba pidiendo.
+
+=== ¿Qué es la terminal de comandos?
+La interfaz de comandos o CLI (Command-Line Interface) es la interfaz por la cual un sistema operativo o un aplicativo reciben comandos directamente del usuario. A día de hoy cada sistema operativo tiene al menos un CLI integrado.
+
+=== CLI vs GUI
+[]
+|===
+|CLI (Command-Line Interface)footnote:[By The GNOME Project - Free software screenshot, GPL, https://commons.wikimedia.org/w/index.php?curid=16485488] |GUI (Grahpical User Interface)footnote:[By Software: KDE developersWallpaper: Krystian ZajdelScreenshot: Paowee - Self-taken; derivative work, GPL, https://commons.wikimedia.org/w/index.php?curid=173343847]
+
+a|image::01_Sesion/CLI.png[CLI,400,align=center]
+a|image::01_Sesion/GUI.png[GUI,400,align=center]
+
+a|* Es una forma más eficiente de comunicación usuario-pc.
+* Atomiza las labores del pc.
+
+a|* Es más intuitiva.
+* Se pueden utilizar elementos visuales que simplifiquen la familiarización con la interfaz.
+|===
+
+== Git & el control de versiones
+
+.Nombres peculiares de archivos.
+[#file-naming]
+image::01_Sesion/FileNaming.png[Nombres peculiares de archivos,600,align=center]
+
+=== ¿En qué consiste el control de versiones?
+Un *control de versiones* consiste registrar los cambios realizados en un archivo o conjunto de archivos a lo largo del tiempo, de modo que se puedan recuperar versiones específicas más adelante [<<r3>>].
+
+=== ¿Qué es Git?
+Git es el *sistema de control de versiones (VCS)* más ampliamente utilizado en la actualidad. La forma en la que Git registra los diferentes estados de los archivos a los que hace seguimiento es a través de "fotos". Si un estado de un archivo no ha cambiado de una foto a otra, no es necesario que git lo guarde de nuevo dentro de su trazabilidad interna.
+
+.Esquema ilustrativo del funcionamiento de Git.
+[#git-version-fundamentals]
+image::01_Sesion/GitVersionsBasics.png[Esquema ilustrativo del funcionamiento de Git,600,align=center]
+
+IMPORTANT: Git no está pensado para llevar un control de versiones de archivos que no sean de texto plano o puedan ser interpretados como texto plano. Usarlo para versionar archivos binarios puede llevar a un alto consumo de memoria y una ralentización del proceso.
+
+=== Estados de archivos en Git
+Git tiene tres estados principales en los que se pueden encontrar los archivos:
+
+Confirmado (commited):: Significa que los datos están almacenados de manera segura en la base de datos local donde Git administra el *repositorio*.
+Modificado (modified):: Significa que se ha modificado el archivo pero todavía no se ha confirmado a la base de datos.
+Preparado (staged):: Significa que se ha marcado un archivo modificado en su versión actual para que vaya en la próxima confirmación.
+
+TIP: Existen otros estados pero los tres mencionados son los principales y alrededor de los cuales se estructura Git.
+
+=== Escenarios de Git
+Existen tres secciones principales de un proyecto de Git:
+
+El directorio de Git (Git directory):: Es donde se almacena, entre algunas otras cosas, la base de datos local donde Git administra el *repositorio*. Es la parte más importante de Git.
+El directorio de trabajo (working directory):: Es una copia de una versión del proyecto. Estos archivos se sacan de la base de datos comprimida en el directorio de Git, y se colocan en disco para que se puedan usar o modificar.
+El área de preparación (staging area):: Es un archivo, generalmente contenido en el directorio de Git, que almacena información acerca de lo que va a ir en la próxima confirmación(commit).
+
+.Escenarios de git las transiciones entre estos.
+[#git-scenarios]
+image::01_Sesion/GitScenarios.png[Escenarios de git las transiciones entre estos,600,align=center]
+
+//Hasta acá llega la familiarización con conceptos.
+== Flujo de trabajo con Git
+//Acá se debe hacer un ejercicio utilizando la terminal y vscode como editor
+
+=== Creación de repositorio y seguimiento de archivos
+
+=== Stage y Commit
+
+=== Trazabilidad de commits
+
+
+== Git desde Visual Studio Code.
+//Acá se debe hacer un ejercicio utilizando vscode como editor y gestionador de versiones.
+
+=== Flujo de trabajo con Visual Studio Code
+
+== Comandos de Git
+A continuación se muestra una tabla con los comandos más útiles y utilizados durante un día de trabajo normal con Git:
+
+[cols="1,2,4", options="header"]
+|===
+|Categoría |Comando |Descripción
+
+|Sistema
+|`clear`
+|Limpia la terminal de comandos. Este no es un comando propio de Git.
+
+|Configuración
+|`git config --global user.name "MI NOMBRE"`
+|Configura el nombre del usuario para los commits.
+
+|Configuración
+|`git config --global user.email "correo@ejemplo.com"`
+|Configura el correo asociado a los commits.
+
+|Configuración
+|`git config --list --show-scope`
+|Muestra toda la configuración de Git y el scope donde está definida.
+
+|Inicialización
+|`git init`
+|Inicializa un nuevo repositorio Git en la carpeta actual.
+
+|Inicialización
+|`git clone <url>`
+|Clona un repositorio remoto.
+
+|Estado
+|`git status`
+|Muestra el estado actual del repositorio.
+
+|Estado
+|`git diff`
+|Muestra cambios no confirmados.
+
+|Estado
+|`git diff --staged`
+|Muestra cambios preparados para commit.
+
+|Seguimiento
+|`git add <archivo>`
+|Agrega un archivo al área de preparación (staging).
+
+|Seguimiento
+|`git add .`
+|Agrega todos los cambios al staging.
+
+|Seguimiento
+|`git restore <archivo>`
+|Descarta cambios locales de un archivo.
+
+|Seguimiento
+|`git restore --staged <archivo>`
+|Saca un archivo del staging.
+
+|Commits
+|`git commit -m "mensaje"`
+|Crea un commit con mensaje.
+
+|Commits
+|`git commit --amend`
+|Modifica el último commit.
+
+|Historial
+|`git log`
+|Muestra el historial de commits.
+
+|Historial
+|`git log --oneline --graph --all`
+|Muestra historial resumido y gráfico de ramas.
+
+|Historial
+|`git show <hash>`
+|Muestra detalles de un commit.
+
+|Ramas
+|`git branch`
+|Lista las ramas locales.
+
+|Ramas
+|`git branch <rama>`
+|Crea una nueva rama.
+
+|Ramas
+|`git switch <rama>`
+|Cambia a otra rama.
+
+|Ramas
+|`git switch -c <rama>`
+|Crea y cambia a una nueva rama.
+
+|Ramas
+|`git branch -d <rama>`
+|Elimina una rama local.
+
+|Integración
+|`git merge <rama>`
+|Fusiona una rama con la actual.
+
+|Integración
+|`git rebase <rama>`
+|Reaplica commits sobre otra base.
+
+|Repositorios remotos
+|`git remote -v`
+|Lista los repositorios remotos configurados.
+
+|Repositorios remotos
+|`git remote add origin <url>`
+|Agrega un repositorio remoto.
+
+|Sincronización
+|`git fetch`
+|Descarga cambios remotos sin integrarlos.
+
+|Sincronización
+|`git pull`
+|Descarga e integra cambios remotos.
+
+|Sincronización
+|`git push`
+|Envía commits al repositorio remoto.
+
+|Sincronización
+|`git push -u origin <rama>`
+|Publica una rama y establece seguimiento.
+
+|Etiquetas
+|`git tag`
+|Lista etiquetas existentes.
+
+|Etiquetas
+|`git tag <nombre>`
+|Crea una etiqueta.
+
+|Etiquetas
+|`git push origin <tag>`
+|Publica una etiqueta en el remoto.
+
+|Deshacer cambios
+|`git reset --soft HEAD~1`
+|Deshace el último commit conservando cambios en staging.
+
+|Deshacer cambios
+|`git reset --hard HEAD~1`
+|Deshace el último commit eliminando cambios.
+
+|Deshacer cambios
+|`git revert <hash>`
+|Revierte un commit creando uno nuevo.
+
+|Limpieza
+|`git clean -fd`
+|Elimina archivos y carpetas no rastreados.
+
+|Stash
+|`git stash`
+|Guarda temporalmente cambios sin commit.
+
+|Stash
+|`git stash pop`
+|Restaura el último stash.
+
+|Ayuda
+|`git help <comando>`
+|Muestra ayuda de un comando.
+
+|Ayuda
+|`git <comando> --help`
+|Abre el manual detallado de un comando.
+
+|===
+
+== Recursos adicionales
+
+[bibliography]
+== Referencias
+
+* [[[r1]]] https://es.wikipedia.org/wiki/Bit
+* [[[r2]]] https://www2.eii.uva.es/fund_inf/cpp/temas/10_ficheros/concepto_fichero.html
+* [[[r3]]] https://git-scm.com/book/es/v2
