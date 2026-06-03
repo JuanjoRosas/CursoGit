@@ -2,6 +2,7 @@
 :toc-title: Contenido
 :toc: right
 :figure-caption: Figura
+:table-caption: Tabla
 :icons: font
 :stylesdir: ./res/styles/
 :stylesheet: github-md.css
@@ -109,7 +110,7 @@ Git es el *sistema de control de versiones (VCS)* más ampliamente utilizado en 
 [#git-version-fundamentals]
 image::01_Sesion/GitVersionsBasics.png[Esquema ilustrativo del funcionamiento de Git,600,align=center]
 
-IMPORTANT: Git no está pensado para llevar un control de versiones de archivos que no sean de texto plano o puedan ser interpretados como texto plano. Usarlo para versionar archivos binarios puede llevar a un alto consumo de memoria y una ralentización del proceso.
+IMPORTANT: Git está pensado para llevar un control de versiones de archivos de texto plano o que puedan ser interpretados como texto plano. Usarlo para versionar archivos binarios puede llevar a un alto consumo de memoria y una ralentización del proceso.
 
 === Estados de archivos en Git
 Git tiene tres estados principales en los que se pueden encontrar los archivos:
@@ -131,28 +132,103 @@ El área de preparación (staging area):: Es un archivo, generalmente contenido 
 [#git-scenarios]
 image::01_Sesion/GitScenarios.png[Escenarios de git las transiciones entre estos,600,align=center]
 
-//Hasta acá llega la familiarización con conceptos.
+
 == Flujo de trabajo con Git
-//Acá se debe hacer un ejercicio utilizando la terminal y vscode como editor
 
-=== Creación de repositorio y seguimiento de archivos
+.Flujo de trabajo básico con Git
+[#git-workflow-diagram]
+plantuml::{diagramsdir}/01_GitBasicWorkflow.puml[format=svg, alt="Flujo de trabajo básico con Git", align="center"]
 
-=== Stage y Commit
+Tal y cómo se muestra en <<git-workflow-diagram>>, la forma más básica de trabajar con Git consiste en 4 pasos cíclicos:
 
-=== Trazabilidad de commits
+#1: Creación del repositorio:: Paso en el cual se le dice a Git que cree el respositorio para el control de versiones en una ruta deseada.
 
+#2: Modificación de archivos:: En este paso es donde pasamos la mayor parte del tiempo. Aquí se crean, eliminan y/o actualizan los archivos que queremos considerar dentro del control de versiones.
+
+#3: Registro de modificaciones:: En este paso se corren todos los comandos necesarios para indicarle a Git que registre las modificaciones que nos interesan.
+
+#4: Revisión de modificaciones:: En este paso utilizamos todas las herramientas que ofrece git para poder revisar y tener la posibilidad de corregir cualquier modificación que se haya registrado en el repositorio.
+
+=== Creación de repositorio
+Cuando hablamos de repositorio, en el ámbito de Git, nos referimos a toda la estructura de archivos que permite a Git realizar un control de versiones sobre ciertos archivos que se le indican. Por lo tanto, si no existe un repositorio tampoco existe un control de versiones. Sin embargo, eso no quiere decir que no existan los archivos que queremos versionar, sino que no se ha iniciado su control de versiones.
+
+Hay en total dos formas de crear un repositorio en Git:
+
+1. Convertir una ruta local en un repositorio nuevo.
+2. Importar un repositorio desde una fuente externa.
+
+Debido al alcance de esta primera sesión, nos centraremos en la primera forma. Para esto basta con abrir cualquier terminal dentro de la ruta de la carpeta raíz de los archivos que se quieren versionar. Para esto:
+
+1. Abrimos la terminal y nos dirigimos a la ruta de la carpeta raíz así: `cd "<ruta_carpeta_raíz>"`. En donde `<ruta_carpeta_raíz>` es la ruta donde tenemos los archivos que queremos versionar.
+
+2. Inicializamos git dentro de la carpeta con el siguiente comando: `git init`.
+
+NOTE: Tenga en cuenta que el repositorio creado "registra" todo el contenido de la carpeta en un solo lugar. Es decir, si dentro de la carpeta existieran otras dos llamadas `proyecto_1` y `proyecto_2`, todos los cambios que ocurran dentro de una de ellas van a afectar las versiones de la otra, sin importar si son independientes o no.
+
+=== Modificación de archivos
+La creación, eliminación y/o modificación de los archivos dentro de un repositorio depende del propósito de cada persona y proyecto. Sin embargo, la mayoría de veces no es recomendable llevar un control de versiones de todos los archivos que se encuentren dentro de la carpeta del repositorio. Para esto existe un archivo especial de Git llamado `.gitignore`.
+
+Tal y como su nombre sugiere, el archivo `.gitignore` le indica a Git que archivos dentro de la carpeta actual debe ignorar. Típicamente en este archivo se listan todos los archivos binarios que se encuentren en la carpeta. Sin embargo, cada proyecto tiene sus propias necesidades y lo más aconsejable es buscar referencias y ejemplos de archivos `.gitignore` según los lenguajes de programación y tecnologías que se estén usando en el proyecto. link:https://www.toptal.com/developers/gitignore[gitignore.io] y link:https://mrkandreev.name/snippets/gitignore-generator/[gitignore-generator] son dos páginas de referencia que se pueden usar.
+
+=== Registro de modificaciones (Stage y Commit)
+Durante del registro de modificaciones se corren todos los comandos necesarios para que el estado actual de uno o varios archivos quede registrado dentro del repositorio de Git.
+
+.Flujo de trabajo normal con un archivo que se desea versionar.
+[#git-file-workflow]
+image::01_Sesion/GitFileWorkflow.png[Flujo de trabajo normal con un archivo que se desea versionar,700,align=center]
+
+En <<git-file-workflow>> se encuentran todos los movimientos que normalmente se realizan sobre un archivo a la hora de versionar con Git:
+
+Untracked -> Staged:: Cuando se crea un repositorio desde cero en una ruta local. Todos los archivos dentro de este se encontraran marcados como _untracked_ (sin rastrear). Lo cual indica que aún no se encuentran siendo "observados" por el repositorio de git. Para que estos pasen a ser marcados cómo _tracked_ (rastreados) tienen que haber sido agregados al escenario de preparación (_stage_). Para esto se ejecuta el siguiente comando: +
+`git add <archivo>` o `git add .` +
+Con el primer comando se agrega únicamente el archivo al escenario de preparación y con el segundo se agregan todos los archivos sin rastrear y modificados. Se debe tener en cuenta que `<archivo>` es el nombre completo del archivo incluyendo su extensión.
+
+Staged -> Unmodified:: La forma de registrar una nueva version de un archivo es a través de _commits_ (confirmaciones). Esto lo que hace es registrar los cambios guardados en el escenario de preparación dentro del repositorio de Git. Para esto se ejecuta el siguiente comando: +
+`git commit -m "mensaje"` +
+Se aconseja que el mensaje sea lo más claro e indicativo posible sobre los cambios que se hicieron.
+
+Unmodified -> Modified:: Este movimiento representa los cambios que se le hacen a un archivo que ya se encuentra rastreado y que ya tienen al menos un cambio confirmado.
+
+Modified -> Staged:: Este movimiento es similar al primero y representa la agregación de un archivo que ha sido modificado al escenario de preparación. Para esto se ejecuta el mismo comando: +
+`git add <archivo>` o `git add .`
+
+=== Revisión de modificaciones
+Para ver el historial de registros o _commits_ con sus respectivos mensajes, autores y fechas Git proporciona el siguiente comando: `git log`. Este comando muestra los _commits_ en la terminal sin embargo hay formas de verlos más gráficamente utilizando aplicaciones de terceros que veremos en la siguiente sección. 
 
 == Git desde Visual Studio Code.
-//Acá se debe hacer un ejercicio utilizando vscode como editor y gestionador de versiones.
 
-=== Flujo de trabajo con Visual Studio Code
+Visual Estudio Code viene ofrece por defecto una sección en su panel lateral dedicada al control de versiones. Una vez inicializado el repositorio en la carpeta en donde se encuentra abierto VSCode el panel se vera tal y como se muestra en <<vscode-source-control-overview>>.
+
+.Estructura del panel de control de versiones de VSCode.
+[#vscode-source-control-overview]
+image::01_Sesion/VSCodeSourceControlOverview.png[Estructura del panel de control de versiones de VSCode,500,align=center]
+
+=== Comandos y estado (Changes)
+En esta sección del panel se puede:
+
+* Visualizar todos los archivos que se encuentran modificados o sin rastrear. 
+* Enviar los cambios en cada archivo a _staging_ o revertirlos a cómo se encontraban antes de las modificaciones.
+* Realizar commits con los cambios que se encuentran en _staging_.
+
+=== Commits (Graph)
+En esta sección del panel se puede:
+
+* Ver la información de cada commit de una forma gráfica.
+* Ver en detalle los cambios que se hicieron en cada commit.
 
 == Comandos de Git
-A continuación se muestra una tabla con los comandos más útiles y utilizados durante un día de trabajo normal con Git:
+En <<git-commands>> se muestran los comandos más útiles y utilizados durante un día de trabajo normal con Git.
+
+[[git-commands]]
+.Tabla de referencia para comandos útiles y frecuentes de Git
 
 [cols="1,2,4", options="header"]
 |===
 |Categoría |Comando |Descripción
+
+|Sistema
+|`cd "<nuevaRuta>"`
+|Cambia la ruta en la cual se encuentra ubicada la terminal por la ruta <nuevaRuta>.
 
 |Sistema
 |`clear`
@@ -324,7 +400,23 @@ A continuación se muestra una tabla con los comandos más útiles y utilizados 
 
 |===
 
+== Ejercicios
+
+1. Realizar los talleres 1, 2, 3 y 4.
+2. Entender que hacen todos los comandos presentados en <<git-commands>> con las siguientes categorías:
+** Estado
+** Seguimiento
+** Commits
+** Deshacer cambios
+
 == Recursos adicionales
+
+* Chacon, S., & Straub, B. (2014). Pro Git (2nd ed.). Apress. doi.org
+** link:https://git-scm.com/book/en/v2[ingles] | link:https://git-scm.com/book/es/v2[español]
+** De este libro se tomaron las imágenes: <<git-version-fundamentals>>, <<git-scenarios>> y <<git-file-workflow>>
+
+* link:https://www.joelonsoftware.com/2003/10/08/the-absolute-minimum-every-software-developer-absolutely-positively-must-know-about-unicode-and-character-sets-no-excuses/[The Absolute Minimum Every Software Developer Absolutely, Positively Must Know About Unicode and Character Sets (No Excuses!)]
+** Lectura interesante sobre qué es lo que entendemos cómo "archivo de texto plano".
 
 [bibliography]
 == Referencias

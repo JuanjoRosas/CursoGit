@@ -613,17 +613,20 @@ h6:hover > a.anchor {
 </li>
 <li><a href="#_flujo_de_trabajo_con_git">Flujo de trabajo con Git</a>
 <ul class="sectlevel2">
-<li><a href="#_creación_de_repositorio_y_seguimiento_de_archivos">Creación de repositorio y seguimiento de archivos</a></li>
-<li><a href="#_stage_y_commit">Stage y Commit</a></li>
-<li><a href="#_trazabilidad_de_commits">Trazabilidad de commits</a></li>
+<li><a href="#_creación_de_repositorio">Creación de repositorio</a></li>
+<li><a href="#_modificación_de_archivos">Modificación de archivos</a></li>
+<li><a href="#_registro_de_modificaciones_stage_y_commit">Registro de modificaciones (Stage y Commit)</a></li>
+<li><a href="#_revisión_de_modificaciones">Revisión de modificaciones</a></li>
 </ul>
 </li>
 <li><a href="#_git_desde_visual_studio_code">Git desde Visual Studio Code.</a>
 <ul class="sectlevel2">
-<li><a href="#_flujo_de_trabajo_con_visual_studio_code">Flujo de trabajo con Visual Studio Code</a></li>
+<li><a href="#_comandos_y_estado_changes">Comandos y estado (Changes)</a></li>
+<li><a href="#_commits_graph">Commits (Graph)</a></li>
 </ul>
 </li>
 <li><a href="#_comandos_de_git">Comandos de Git</a></li>
+<li><a href="#_ejercicios">Ejercicios</a></li>
 <li><a href="#_recursos_adicionales">Recursos adicionales</a></li>
 <li><a href="#_referencias">Referencias</a></li>
 </ul>
@@ -860,7 +863,7 @@ h6:hover > a.anchor {
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-Git no está pensado para llevar un control de versiones de archivos que no sean de texto plano o puedan ser interpretados como texto plano. Usarlo para versionar archivos binarios puede llevar a un alto consumo de memoria y una ralentización del proceso.
+Git está pensado para llevar un control de versiones de archivos de texto plano o que puedan ser interpretados como texto plano. Usarlo para versionar archivos binarios puede llevar a un alto consumo de memoria y una ralentización del proceso.
 </td>
 </tr>
 </table>
@@ -933,26 +936,182 @@ Existen otros estados pero los tres mencionados son los principales y alrededor 
 <div class="sect1">
 <h2 id="_flujo_de_trabajo_con_git">Flujo de trabajo con Git</h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="_creación_de_repositorio_y_seguimiento_de_archivos">Creación de repositorio y seguimiento de archivos</h3>
-
+<div id="git-workflow-diagram" class="imageblock text-center">
+<div class="content">
+<img src="./assets/imgs/01_GitBasicWorkflow.svg" alt="Flujo de trabajo básico con Git" width="197" height="326">
+</div>
+<div class="title">Figura 6. Flujo de trabajo básico con Git</div>
+</div>
+<div class="paragraph">
+<p>Tal y cómo se muestra en <a href="#git-workflow-diagram">Figura 6</a>, la forma más básica de trabajar con Git consiste en 4 pasos cíclicos:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">#1: Creación del repositorio</dt>
+<dd>
+<p>Paso en el cual se le dice a Git que cree el respositorio para el control de versiones en una ruta deseada.</p>
+</dd>
+<dt class="hdlist1">#2: Modificación de archivos</dt>
+<dd>
+<p>En este paso es donde pasamos la mayor parte del tiempo. Aquí se crean, eliminan y/o actualizan los archivos que queremos considerar dentro del control de versiones.</p>
+</dd>
+<dt class="hdlist1">#3: Registro de modificaciones</dt>
+<dd>
+<p>En este paso se corren todos los comandos necesarios para indicarle a Git que registre las modificaciones que nos interesan.</p>
+</dd>
+<dt class="hdlist1">#4: Revisión de modificaciones</dt>
+<dd>
+<p>En este paso utilizamos todas las herramientas que ofrece git para poder revisar y tener la posibilidad de corregir cualquier modificación que se haya registrado en el repositorio.</p>
+</dd>
+</dl>
 </div>
 <div class="sect2">
-<h3 id="_stage_y_commit">Stage y Commit</h3>
-
+<h3 id="_creación_de_repositorio">Creación de repositorio</h3>
+<div class="paragraph">
+<p>Cuando hablamos de repositorio, en el ámbito de Git, nos referimos a toda la estructura de archivos que permite a Git realizar un control de versiones sobre ciertos archivos que se le indican. Por lo tanto, si no existe un repositorio tampoco existe un control de versiones. Sin embargo, eso no quiere decir que no existan los archivos que queremos versionar, sino que no se ha iniciado su control de versiones.</p>
+</div>
+<div class="paragraph">
+<p>Hay en total dos formas de crear un repositorio en Git:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Convertir una ruta local en un repositorio nuevo.</p>
+</li>
+<li>
+<p>Importar un repositorio desde una fuente externa.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Debido al alcance de esta primera sesión, nos centraremos en la primera forma. Para esto basta con abrir cualquier terminal dentro de la ruta de la carpeta raíz de los archivos que se quieren versionar. Para esto:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Abrimos la terminal y nos dirigimos a la ruta de la carpeta raíz así: <code>cd "&lt;ruta_carpeta_raíz&gt;"</code>. En donde <code>&lt;ruta_carpeta_raíz&gt;</code> es la ruta donde tenemos los archivos que queremos versionar.</p>
+</li>
+<li>
+<p>Inicializamos git dentro de la carpeta con el siguiente comando: <code>git init</code>.</p>
+</li>
+</ol>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Tenga en cuenta que el repositorio creado "registra" todo el contenido de la carpeta en un solo lugar. Es decir, si dentro de la carpeta existieran otras dos llamadas <code>proyecto_1</code> y <code>proyecto_2</code>, todos los cambios que ocurran dentro de una de ellas van a afectar las versiones de la otra, sin importar si son independientes o no.
+</td>
+</tr>
+</table>
+</div>
 </div>
 <div class="sect2">
-<h3 id="_trazabilidad_de_commits">Trazabilidad de commits</h3>
-
+<h3 id="_modificación_de_archivos">Modificación de archivos</h3>
+<div class="paragraph">
+<p>La creación, eliminación y/o modificación de los archivos dentro de un repositorio depende del propósito de cada persona y proyecto. Sin embargo, la mayoría de veces no es recomendable llevar un control de versiones de todos los archivos que se encuentren dentro de la carpeta del repositorio. Para esto existe un archivo especial de Git llamado <code>.gitignore</code>.</p>
+</div>
+<div class="paragraph">
+<p>Tal y como su nombre sugiere, el archivo <code>.gitignore</code> le indica a Git que archivos dentro de la carpeta actual debe ignorar. Típicamente en este archivo se listan todos los archivos binarios que se encuentren en la carpeta. Sin embargo, cada proyecto tiene sus propias necesidades y lo más aconsejable es buscar referencias y ejemplos de archivos <code>.gitignore</code> según los lenguajes de programación y tecnologías que se estén usando en el proyecto. <a href="https://www.toptal.com/developers/gitignore">gitignore.io</a> y <a href="https://mrkandreev.name/snippets/gitignore-generator/">gitignore-generator</a> son dos páginas de referencia que se pueden usar.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_registro_de_modificaciones_stage_y_commit">Registro de modificaciones (Stage y Commit)</h3>
+<div class="paragraph">
+<p>Durante del registro de modificaciones se corren todos los comandos necesarios para que el estado actual de uno o varios archivos quede registrado dentro del repositorio de Git.</p>
+</div>
+<div id="git-file-workflow" class="imageblock text-center">
+<div class="content">
+<img src="./assets/imgs/01_Sesion/GitFileWorkflow.png" alt="Flujo de trabajo normal con un archivo que se desea versionar" width="700">
+</div>
+<div class="title">Figura 7. Flujo de trabajo normal con un archivo que se desea versionar.</div>
+</div>
+<div class="paragraph">
+<p>En <a href="#git-file-workflow">Figura 7</a> se encuentran todos los movimientos que normalmente se realizan sobre un archivo a la hora de versionar con Git:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Untracked &#8594; Staged</dt>
+<dd>
+<p>Cuando se crea un repositorio desde cero en una ruta local. Todos los archivos dentro de este se encontraran marcados como <em>untracked</em> (sin rastrear). Lo cual indica que aún no se encuentran siendo "observados" por el repositorio de git. Para que estos pasen a ser marcados cómo <em>tracked</em> (rastreados) tienen que haber sido agregados al escenario de preparación (<em>stage</em>). Para esto se ejecuta el siguiente comando:<br>
+<code>git add &lt;archivo&gt;</code> o <code>git add .</code><br>
+Con el primer comando se agrega únicamente el archivo al escenario de preparación y con el segundo se agregan todos los archivos sin rastrear y modificados. Se debe tener en cuenta que <code>&lt;archivo&gt;</code> es el nombre completo del archivo incluyendo su extensión.</p>
+</dd>
+<dt class="hdlist1">Staged &#8594; Unmodified</dt>
+<dd>
+<p>La forma de registrar una nueva version de un archivo es a través de <em>commits</em> (confirmaciones). Esto lo que hace es registrar los cambios guardados en el escenario de preparación dentro del repositorio de Git. Para esto se ejecuta el siguiente comando:<br>
+<code>git commit -m "mensaje"</code><br>
+Se aconseja que el mensaje sea lo más claro e indicativo posible sobre los cambios que se hicieron.</p>
+</dd>
+<dt class="hdlist1">Unmodified &#8594; Modified</dt>
+<dd>
+<p>Este movimiento representa los cambios que se le hacen a un archivo que ya se encuentra rastreado y que ya tienen al menos un cambio confirmado.</p>
+</dd>
+<dt class="hdlist1">Modified &#8594; Staged</dt>
+<dd>
+<p>Este movimiento es similar al primero y representa la agregación de un archivo que ha sido modificado al escenario de preparación. Para esto se ejecuta el mismo comando:<br>
+<code>git add &lt;archivo&gt;</code> o <code>git add .</code></p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_revisión_de_modificaciones">Revisión de modificaciones</h3>
+<div class="paragraph">
+<p>Para ver el historial de registros o <em>commits</em> con sus respectivos mensajes, autores y fechas Git proporciona el siguiente comando: <code>git log</code>. Este comando muestra los <em>commits</em> en la terminal sin embargo hay formas de verlos más gráficamente utilizando aplicaciones de terceros que veremos en la siguiente sección.</p>
+</div>
 </div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="_git_desde_visual_studio_code">Git desde Visual Studio Code.</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>Visual Estudio Code viene ofrece por defecto una sección en su panel lateral dedicada al control de versiones. Una vez inicializado el repositorio en la carpeta en donde se encuentra abierto VSCode el panel se vera tal y como se muestra en <a href="#vscode-source-control-overview">Figura 8</a>.</p>
+</div>
+<div id="vscode-source-control-overview" class="imageblock text-center">
+<div class="content">
+<img src="./assets/imgs/01_Sesion/VSCodeSourceControlOverview.png" alt="Estructura del panel de control de versiones de VSCode" width="500">
+</div>
+<div class="title">Figura 8. Estructura del panel de control de versiones de VSCode.</div>
+</div>
 <div class="sect2">
-<h3 id="_flujo_de_trabajo_con_visual_studio_code">Flujo de trabajo con Visual Studio Code</h3>
-
+<h3 id="_comandos_y_estado_changes">Comandos y estado (Changes)</h3>
+<div class="paragraph">
+<p>En esta sección del panel se puede:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Visualizar todos los archivos que se encuentran modificados o sin rastrear.</p>
+</li>
+<li>
+<p>Enviar los cambios en cada archivo a <em>staging</em> o revertirlos a cómo se encontraban antes de las modificaciones.</p>
+</li>
+<li>
+<p>Realizar commits con los cambios que se encuentran en <em>staging</em>.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_commits_graph">Commits (Graph)</h3>
+<div class="paragraph">
+<p>En esta sección del panel se puede:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Ver la información de cada commit de una forma gráfica.</p>
+</li>
+<li>
+<p>Ver en detalle los cambios que se hicieron en cada commit.</p>
+</li>
+</ul>
+</div>
 </div>
 </div>
 </div>
@@ -960,9 +1119,10 @@ Existen otros estados pero los tres mencionados son los principales y alrededor 
 <h2 id="_comandos_de_git">Comandos de Git</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>A continuación se muestra una tabla con los comandos más útiles y utilizados durante un día de trabajo con Git:</p>
+<p>En <a href="#git-commands">Tabla 1</a> se muestran los comandos más útiles y utilizados durante un día de trabajo normal con Git.</p>
 </div>
-<table class="tableblock frame-all grid-all stretch">
+<table id="git-commands" class="tableblock frame-all grid-all stretch">
+<caption class="title">Tabla 1. Tabla de referencia para comandos útiles y frecuentes de Git</caption>
 <colgroup>
 <col style="width: 14.2857%;">
 <col style="width: 28.5714%;">
@@ -976,6 +1136,11 @@ Existen otros estados pero los tres mencionados son los principales y alrededor 
 </tr>
 </thead>
 <tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sistema</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cd "&lt;nuevaRuta&gt;"</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cambia la ruta en la cual se encuentra ubicada la terminal por la ruta &lt;nuevaRuta&gt;.</p></td>
+</tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Sistema</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>clear</code></p></td>
@@ -1191,9 +1356,66 @@ Existen otros estados pero los tres mencionados son los principales y alrededor 
 </div>
 </div>
 <div class="sect1">
+<h2 id="_ejercicios">Ejercicios</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Realizar los talleres 1, 2, 3 y 4.</p>
+</li>
+<li>
+<p>Entender que hacen todos los comandos presentados en <a href="#git-commands">Tabla 1</a> con las siguientes categorías:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Estado</p>
+</li>
+<li>
+<p>Seguimiento</p>
+</li>
+<li>
+<p>Commits</p>
+</li>
+<li>
+<p>Deshacer cambios</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_recursos_adicionales">Recursos adicionales</h2>
 <div class="sectionbody">
-
+<div class="ulist">
+<ul>
+<li>
+<p>Chacon, S., &amp; Straub, B. (2014). Pro Git (2nd ed.). Apress. doi.org</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://git-scm.com/book/en/v2">ingles</a> | <a href="https://git-scm.com/book/es/v2">español</a></p>
+</li>
+<li>
+<p>De este libro se tomaron las imágenes: <a href="#git-version-fundamentals">Figura 4</a>, <a href="#git-scenarios">Figura 5</a> y <a href="#git-file-workflow">Figura 7</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><a href="https://www.joelonsoftware.com/2003/10/08/the-absolute-minimum-every-software-developer-absolutely-positively-must-know-about-unicode-and-character-sets-no-excuses/">The Absolute Minimum Every Software Developer Absolutely, Positively Must Know About Unicode and Character Sets (No Excuses!)</a></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Lectura interesante sobre qué es lo que entendemos cómo "archivo de texto plano".</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -1235,7 +1457,7 @@ Existen otros estados pero los tres mencionados son los principales y alrededor 
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-05-21 08:49:38 -0500
+Last updated 2026-06-02 21:53:06 -0500
 </div>
 </div>
 </body>

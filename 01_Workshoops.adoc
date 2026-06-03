@@ -1,0 +1,52 @@
+= Talleres - Sesión 1
+:toc-title: Contenido
+:toc: right
+:figure-caption: Figura
+:table-caption: Tabla
+:icons: font
+:stylesdir: ./res/styles/
+:stylesheet: github-md.css
+:docinfo: private
+:docinfodir: ./res/docinfo/
+:imagesdir: ./assets/imgs/
+:attachmentsdir: ./assets/attachments/
+:diagramsdir: ./assets/diagrams/
+:diagram-cachedir: ./.cache/diagrams/
+:xrefstyle: short
+:doctype: article
+
+== 01_Creación Repositorio
+Para este ejercicio:
+
+1. Inicialice un repositorio en utilizando como carpeta raíz: `01_Creacion Repositorio`.
+2. Realice un primer commit sin modificar los documentos.
+3. Llene la información del documento llamado `presentación.adoc` y compile el documento utilizando el comando `ctrl+shift+p` y buscando ">AsciiDoc: Save HTML Document". Por último, registre los cambios haciendo un commit.
+
+NOTE: Recuerde siempre agregar mensajes descriptivos en los commits que realice.
+
+== 02_Commits consecutivos
+Para este ejercicio:
+
+1. Inicialice un repositorio utilizando como carpeta raíz: 02_Commits consecutivos.
+2. Cree un archivo `.gitignore` en el que se le indique a Git ignorar la carpeta `ignore` y todos los archivos con extensión `.png`. Posteriormente realice un primer commit sin modificar los demás documentos.
+3. Corrija los errores ortográficos del archivo `index.adoc` ayudandose de la extensión `Code spell checker` y su diccionario en español. Posteriormente compile el archivo a HTML. Por último, registre las correcciones haciendo un commit.
+4. Cambie la imagen utilizada en el archivo `index.adoc` por la nueva imagen `ignore/GitSeguro.png`. *NO* compile el archivo a HTML. Por último, registre los cambios haciendo un commit.
+5. Compile el archivo `index.adoc` a HTML y agregue el cambio al último commit utilizando la opción `--amend`.
+
+NOTE: Tenga en cuenta que el comando para compilar a HTML no va a funcionar si no tiene activa la ventana con el archivo que desea compilar.
+
+== 03_Creación Repositorio VSCode
+Para este ejercicio:
+
+1. Realice los mismos pasos que realizó para el ejercicio 1, esta vez utilizando la interfaz gráfica de Visual Studio Code.
+2. Compare las diferencias entre realizar ambos ejercicios con métodos distintos.
+** ¿Obtuvo resultados distintos?
+** ¿Cual método fue más intuitivo?
+
+== 04_Commits consecutivos VSCode
+Para este ejercicio:
+
+1. Realice los mismos pasos que realizó para el ejercicio 2, esta vez utilizando la interfaz gráfica de Visual Studio Code.
+2. Compare las diferencias entre realizar ambos ejercicios con métodos distintos.
+** ¿Obtuvo resultados distintos?
+** ¿Cual método fue más intuitivo?
