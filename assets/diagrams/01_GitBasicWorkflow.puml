@@ -1,0 +1,7 @@
+@startuml
+(*) --> "Crear repositorio"
+--> "Modificar archivos" as mod
+--> "Registar cambios"
+--> "Revisar historico de registros"
+--> mod
+@endum
