@@ -1,3 +1,7 @@
 .*/
 build/*
 exports/*/
+
+#DOCS
+docs/*.png
+docs/*.pptx
